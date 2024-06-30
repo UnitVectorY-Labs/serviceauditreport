@@ -11,13 +11,19 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.core;
+package com.unitvectory.serviceauditreport.service.github.model;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 /**
- * The Core
+ * The GitHubOrganization
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class Core {
+@Data
+@AllArgsConstructor
+public class GitHubOrganization {
 
+    private String name;
 }

@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.unitvectory.serviceauditreport</groupId>
     <artifactId>core</artifactId>
 
     <properties>

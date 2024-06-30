@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.unitvectory.serviceauditreport</groupId>
-    <artifactId>analyzer</artifactId>
+    <artifactId>service-github</artifactId>
 
     <properties>
     </properties>
@@ -19,6 +19,11 @@
         <dependency>
             <groupId>com.unitvectory.serviceauditreport</groupId>
             <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.unitvectory.serviceauditreport</groupId>
+            <artifactId>collector</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

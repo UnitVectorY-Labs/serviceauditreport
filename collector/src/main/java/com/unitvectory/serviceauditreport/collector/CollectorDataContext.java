@@ -13,11 +13,27 @@
  */
 package com.unitvectory.serviceauditreport.collector;
 
+import java.util.List;
+
+import com.unitvectory.serviceauditreport.core.DataContext;
+
 /**
- * The Collector
+ * The collector data context
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class Collector {
+public class CollectorDataContext implements DataContext {
+
+    @Override
+    public <T> T getSingularData(Class<T> type) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSingularData'");
+    }
+
+    @Override
+    public <T> List<T> getAllData(Class<T> type) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllData'");
+    }
 
 }

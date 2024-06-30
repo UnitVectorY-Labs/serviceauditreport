@@ -9,12 +9,18 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.unitvectory.serviceauditreport</groupId>
     <artifactId>reporter</artifactId>
 
     <properties>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.unitvectory.serviceauditreport</groupId>
+            <artifactId>core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
