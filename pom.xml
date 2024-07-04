@@ -18,6 +18,7 @@
 
     <modules>
         <module>core</module>
+        <module>core-app</module>
     </modules>
     <profiles>
         <profile>
@@ -27,6 +28,8 @@
             </activation>
             <modules>
                 <module>collector</module>
+                <module>service-github</module>
+                <module>collector-app</module>
             </modules>
         </profile>
         <profile>
@@ -36,6 +39,7 @@
             </activation>
             <modules>
                 <module>analyzer</module>
+                <module>analyzer-app</module>
             </modules>
         </profile>
         <profile>
@@ -45,16 +49,7 @@
             </activation>
             <modules>
                 <module>reporter</module>
-            </modules>
-        </profile>
-        <profile>
-            <id>service-github</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <modules>
-                <module>collector</module>
-                <module>service-github</module>
+                <module>reporter-app</module>
             </modules>
         </profile>
     </profiles>

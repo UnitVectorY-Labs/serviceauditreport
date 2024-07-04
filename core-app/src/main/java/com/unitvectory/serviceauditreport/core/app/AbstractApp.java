@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.collector;
+package com.unitvectory.serviceauditreport.core.app;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -20,25 +20,16 @@ import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 
 /**
- * The Collector Command line implementation
+ * The Abstract App
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class CollectorCommand implements CommandLineRunner {
+public abstract class AbstractApp implements CommandLineRunner {
 
-    private static Logger LOG = LoggerFactory
-            .getLogger(CollectorCommand.class);
-
-    public static void main(String[] args) {
-        SpringApplication.run(CollectorCommand.class, args);
-        LOG.info("APPLICATION FINISHED");
-    }
+    protected abstract String getAppName();
 
     @Override
     public void run(String... args) throws Exception {
@@ -57,13 +48,13 @@ public class CollectorCommand implements CommandLineRunner {
         }
     }
 
-    private static Options createOptions() {
+    private Options createOptions() {
         Options options = new Options();
 
         Option configOption = Option.builder("c")
                 .longOpt("config")
                 .argName("config")
-                .desc("the collector configuration")
+                .desc("the " + this.getAppName() + " configuration")
                 .hasArg()
                 .required(true)
                 .build();
@@ -72,9 +63,9 @@ public class CollectorCommand implements CommandLineRunner {
         return options;
     }
 
-    private static void handleParseException(ParseException exp, Options options) {
+    private void handleParseException(ParseException exp, Options options) {
         System.out.println("Failed to parse command line arguments: " + exp.getMessage());
         HelpFormatter helpFormatter = new HelpFormatter();
-        helpFormatter.printHelp("collector -c config.json", options);
+        helpFormatter.printHelp(this.getAppName() + " -c config.json", options);
     }
 }
