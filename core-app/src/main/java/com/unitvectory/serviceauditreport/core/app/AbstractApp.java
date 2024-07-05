@@ -22,6 +22,9 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.springframework.boot.CommandLineRunner;
 
+import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
+import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
+
 /**
  * The Abstract App
  * 
@@ -30,6 +33,8 @@ import org.springframework.boot.CommandLineRunner;
 public abstract class AbstractApp implements CommandLineRunner {
 
     protected abstract String getAppName();
+
+    protected abstract AbstractAppService getAppService();
 
     @Override
     public void run(String... args) throws Exception {
@@ -40,6 +45,14 @@ public abstract class AbstractApp implements CommandLineRunner {
             CommandLine line = parser.parse(options, args);
 
             String configValue = line.getOptionValue("config");
+
+            // TODO: Load the configuration
+
+            AbstractAppService service = this.getAppService();
+
+            AbstractConfig config = null;
+
+            service.run(config);
 
             // TODO: Everything
 

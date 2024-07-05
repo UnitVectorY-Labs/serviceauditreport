@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.collector.service;
+package com.unitvectory.serviceauditreport.collector.app.service;
 
 import java.util.Map;
 
@@ -21,6 +21,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.unitvectory.serviceauditreport.collector.AbstractCollectorTask;
+import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
+import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
 
 import lombok.AllArgsConstructor;
 
@@ -31,21 +33,22 @@ import lombok.AllArgsConstructor;
  */
 @Service
 @AllArgsConstructor
-public class CollectorService {
+public class CollectorService extends AbstractAppService {
 
     private static Logger LOG = LoggerFactory.getLogger(CollectorService.class);
 
     private ApplicationContext applicationContext;
 
-    public void runAllCollectors() {
+    @Override
+    public void run(AbstractConfig config) {
         LOG.info("Loading collectors to run...");
-        Map<String, AbstractCollectorTask> beansOfType = applicationContext.getBeansOfType(AbstractCollectorTask.class, true, true);
+        Map<String, AbstractCollectorTask> beansOfType = applicationContext.getBeansOfType(AbstractCollectorTask.class,
+                true, true);
 
         for (Map.Entry<String, AbstractCollectorTask> entry : beansOfType.entrySet()) {
             AbstractCollectorTask collector = entry.getValue();
             System.out.println("Bean name: " + entry.getKey() + ", Bean instance: " + entry.getValue());
         }
-
 
         LOG.info("Data collection finished.");
     }

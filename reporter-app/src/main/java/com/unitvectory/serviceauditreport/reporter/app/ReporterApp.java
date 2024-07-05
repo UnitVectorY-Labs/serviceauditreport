@@ -18,6 +18,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
+import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
+import com.unitvectory.serviceauditreport.reporter.app.service.ReporterService;
+
+import lombok.AllArgsConstructor;
 
 /**
  * The Reporter App
@@ -25,13 +29,22 @@ import com.unitvectory.serviceauditreport.core.app.AbstractApp;
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @SpringBootApplication(scanBasePackages = "com.unitvectory.serviceauditreport")
+@AllArgsConstructor
 public class ReporterApp extends AbstractApp {
 
     private static Logger LOG = LoggerFactory.getLogger(ReporterApp.class);
 
+    private ReporterService reporterService;
+
     @Override
     protected String getAppName() {
         return "reporter";
+    }
+
+    @Override
+    protected AbstractAppService getAppService() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAppService'");
     }
 
 }

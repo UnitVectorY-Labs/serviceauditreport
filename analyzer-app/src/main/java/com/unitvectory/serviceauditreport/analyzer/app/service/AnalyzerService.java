@@ -11,38 +11,34 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.analyzer.app;
+package com.unitvectory.serviceauditreport.analyzer.app.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Service;
 
-import com.unitvectory.serviceauditreport.analyzer.app.service.AnalyzerService;
-import com.unitvectory.serviceauditreport.core.app.AbstractApp;
 import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
+import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
 
 import lombok.AllArgsConstructor;
 
 /**
- * The Analyzer App
+ * The Collector Service
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@SpringBootApplication(scanBasePackages = "com.unitvectory.serviceauditreport")
+@Service
 @AllArgsConstructor
-public class AnalyzerApp extends AbstractApp {
+public class AnalyzerService extends AbstractAppService {
 
-    private static Logger LOG = LoggerFactory.getLogger(AnalyzerApp.class);
+    private static Logger LOG = LoggerFactory.getLogger(AnalyzerService.class);
 
-    private AnalyzerService analyzerService;
-
-    @Override
-    protected String getAppName() {
-        return "analyzer";
-    }
+    private ApplicationContext applicationContext;
 
     @Override
-    protected AbstractAppService getAppService() {
-        return this.analyzerService;
+    public void run(AbstractConfig config) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'run'");
     }
 }

@@ -19,8 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.unitvectory.serviceauditreport.collector.service.CollectorService;
+import com.unitvectory.serviceauditreport.collector.app.service.CollectorService;
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
+import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
 
 /**
  * The Collector App
@@ -35,13 +36,18 @@ public class CollectorApp extends AbstractApp {
     @Autowired
     private CollectorService collectorService;
 
-    public static void main(String[] args) {
-        SpringApplication.run(CollectorApp.class, args);
-        LOG.info("APPLICATION FINISHED");
+    @Override
+    protected AbstractAppService getAppService() {
+        return collectorService;
     }
 
     @Override
     protected String getAppName() {
         return "collector";
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(CollectorApp.class, args);
+        LOG.info("APPLICATION FINISHED");
     }
 }

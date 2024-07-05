@@ -11,15 +11,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.collector.model;
+package com.unitvectory.serviceauditreport.core.app.service;
 
 import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
 
 /**
- * The collector config
+ * The abstract app service
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class CollectorConfig extends AbstractConfig {
+public abstract class AbstractAppService {
 
+    public abstract void run(AbstractConfig config);
 }
