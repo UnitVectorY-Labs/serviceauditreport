@@ -15,6 +15,7 @@ package com.unitvectory.serviceauditreport.analyzer.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.unitvectory.serviceauditreport.analyzer.app.service.AnalyzerService;
@@ -44,5 +45,10 @@ public class AnalyzerApp extends AbstractApp {
     @Override
     protected AbstractAppService getAppService() {
         return this.analyzerService;
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(AnalyzerApp.class, args);
+        LOG.info("APPLICATION FINISHED");
     }
 }

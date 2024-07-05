@@ -13,18 +13,21 @@
  */
 package com.unitvectory.serviceauditreport.analyzer.app.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import com.unitvectory.serviceauditreport.analyzer.AbstractAnalyzerTask;
 import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
 import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
 
 import lombok.AllArgsConstructor;
 
 /**
- * The Collector Service
+ * The Analyzer Service
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
@@ -38,7 +41,15 @@ public class AnalyzerService extends AbstractAppService {
 
     @Override
     public void run(AbstractConfig config) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        LOG.info("Loading analyzers to run...");
+        Map<String, AbstractAnalyzerTask> beansOfType = applicationContext.getBeansOfType(AbstractAnalyzerTask.class,
+                true, true);
+
+        for (Map.Entry<String, AbstractAnalyzerTask> entry : beansOfType.entrySet()) {
+            AbstractAnalyzerTask analyzer = entry.getValue();
+            System.out.println("Bean name: " + entry.getKey() + ", Bean instance: " + entry.getValue());
+        }
+
+        LOG.info("Data analysis finished.");
     }
 }

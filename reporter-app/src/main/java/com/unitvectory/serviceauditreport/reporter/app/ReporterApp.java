@@ -15,6 +15,7 @@ package com.unitvectory.serviceauditreport.reporter.app;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
@@ -43,8 +44,11 @@ public class ReporterApp extends AbstractApp {
 
     @Override
     protected AbstractAppService getAppService() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAppService'");
+        return this.reporterService;
     }
 
+    public static void main(String[] args) {
+        SpringApplication.run(ReporterApp.class, args);
+        LOG.info("APPLICATION FINISHED");
+    }
 }

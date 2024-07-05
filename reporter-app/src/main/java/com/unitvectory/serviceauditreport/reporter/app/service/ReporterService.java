@@ -13,6 +13,8 @@
  */
 package com.unitvectory.serviceauditreport.reporter.app.service;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -20,11 +22,12 @@ import org.springframework.stereotype.Service;
 
 import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
 import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
+import com.unitvectory.serviceauditreport.reporter.AbstractReporterTask;
 
 import lombok.AllArgsConstructor;
 
 /**
- * The Collector Service
+ * The Reporter Service
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
@@ -38,7 +41,15 @@ public class ReporterService extends AbstractAppService {
 
     @Override
     public void run(AbstractConfig config) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'run'");
+        LOG.info("Loading reporters to run...");
+        Map<String, AbstractReporterTask> beansOfType = applicationContext.getBeansOfType(AbstractReporterTask.class,
+                true, true);
+
+        for (Map.Entry<String, AbstractReporterTask> entry : beansOfType.entrySet()) {
+            AbstractReporterTask reporter = entry.getValue();
+            System.out.println("Bean name: " + entry.getKey() + ", Bean instance: " + entry.getValue());
+        }
+
+        LOG.info("Data reporting finished.");
     }
 }

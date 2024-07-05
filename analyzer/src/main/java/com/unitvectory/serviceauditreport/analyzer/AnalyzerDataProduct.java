@@ -13,11 +13,19 @@
  */
 package com.unitvectory.serviceauditreport.analyzer;
 
+import com.unitvectory.serviceauditreport.core.DataProduct;
+
 /**
- * The Analyzer
+ * The analyzer data product
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class Analyzer {
+public class AnalyzerDataProduct implements DataProduct {
+
+    @Override
+    public <T> void setSingularData(Class<T> type, T data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setSingularData'");
+    }
 
 }

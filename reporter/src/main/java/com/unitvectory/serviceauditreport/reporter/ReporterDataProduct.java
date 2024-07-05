@@ -13,11 +13,19 @@
  */
 package com.unitvectory.serviceauditreport.reporter;
 
+import com.unitvectory.serviceauditreport.core.DataProduct;
+
 /**
- * The Reporter
+ * The reporter data product
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class Reporter {
+public class ReporterDataProduct implements DataProduct {
+
+    @Override
+    public <T> void setSingularData(Class<T> type, T data) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setSingularData'");
+    }
 
 }
