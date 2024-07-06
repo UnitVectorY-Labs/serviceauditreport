@@ -28,6 +28,7 @@
             </activation>
             <modules>
                 <module>collector</module>
+                <module>service-demo</module>
                 <module>service-github</module>
                 <module>collector-app</module>
             </modules>

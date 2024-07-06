@@ -11,29 +11,23 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.service.github.config;
+package com.unitvectory.serviceauditreport.service.demo.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.unitvectory.serviceauditreport.service.github.collector.GitHubOrganizationCollector;
-import com.unitvectory.serviceauditreport.service.github.collector.GitHubRepositorySummaryCollector;
+import com.unitvectory.serviceauditreport.service.demo.collector.DemoCollector;
 
 /**
- * The GitHubServiceConfig
+ * The DemoServiceConfig
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Configuration
-public class GitHubServiceConfig {
+public class DemoServiceConfig {
 
     @Bean
-    public GitHubOrganizationCollector gitHubOrganizationCollector() {
-        return new GitHubOrganizationCollector();
-    }
-
-    @Bean
-    public GitHubRepositorySummaryCollector gitHubrepositorySummaryCollector() {
-        return new GitHubRepositorySummaryCollector();
+    public DemoCollector demoCollector() {
+        return new DemoCollector();
     }
 }
