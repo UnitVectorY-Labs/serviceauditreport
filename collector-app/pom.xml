@@ -18,18 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>com.unitvectory.serviceauditreport</groupId>
+            <artifactId>serviceauditcore</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.unitvectory.serviceauditreport</groupId>
             <artifactId>core-app</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.unitvectory.serviceauditreport</groupId>
-            <artifactId>collector</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <!-- Goal is to not have this be a compile time dependency -->
-        <dependency>
-            <groupId>com.unitvectory.serviceauditreport</groupId>
-            <artifactId>service-demo</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

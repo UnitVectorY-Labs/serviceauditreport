@@ -1,3 +1,0 @@
-# reporter
-
-The reporter library

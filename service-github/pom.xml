@@ -18,12 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.unitvectory.serviceauditreport</groupId>
-            <artifactId>core</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.unitvectory.serviceauditreport</groupId>
-            <artifactId>collector</artifactId>
+            <artifactId>serviceauditcore</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

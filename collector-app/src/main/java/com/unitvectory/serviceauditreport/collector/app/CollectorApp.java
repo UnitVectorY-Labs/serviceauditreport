@@ -13,33 +13,16 @@
  */
 package com.unitvectory.serviceauditreport.collector.app;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.pmw.tinylog.Logger;
 
-import com.unitvectory.serviceauditreport.collector.app.service.CollectorService;
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
-import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
 
 /**
  * The Collector App
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@SpringBootApplication(scanBasePackages = "com.unitvectory.serviceauditreport")
 public class CollectorApp extends AbstractApp {
-
-    private static Logger LOG = LoggerFactory.getLogger(CollectorApp.class);
-
-    @Autowired
-    private CollectorService collectorService;
-
-    @Override
-    protected AbstractAppService getAppService() {
-        return collectorService;
-    }
 
     @Override
     protected String getAppName() {
@@ -47,7 +30,8 @@ public class CollectorApp extends AbstractApp {
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(CollectorApp.class, args);
-        LOG.info("APPLICATION FINISHED");
+        Logger.info("APPLICATION STARTED");
+        new CollectorApp().run(args);
+        Logger.info("APPLICATION FINISHED");
     }
 }

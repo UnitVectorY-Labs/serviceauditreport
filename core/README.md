@@ -1,3 +1,0 @@
-# core
-
-The core library

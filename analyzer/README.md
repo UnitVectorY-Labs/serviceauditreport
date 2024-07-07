@@ -1,3 +1,0 @@
-# analyzer
-
-The analyzer library

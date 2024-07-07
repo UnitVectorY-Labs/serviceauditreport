@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-import com.unitvectory.serviceauditreport.core.AbstractData;
-
 /**
  * The GitHubRepositorySummary
  * 
@@ -27,7 +25,7 @@ import com.unitvectory.serviceauditreport.core.AbstractData;
  */
 @Data
 @NoArgsConstructor
-public class GitHubRepositorySummary implements AbstractData {
+public class GitHubRepositorySummary {
     private int id;
     private String nodeId;
     private String name;
@@ -74,11 +72,6 @@ public class GitHubRepositorySummary implements AbstractData {
     private boolean allowForking;
     private boolean webCommitSignoffRequired;
     private SecurityAndAnalysis securityAndAnalysis;
-
-    public String getDataId() {
-        // TODO: This could be better
-        return this.id + "";
-    }
 
     @Data
     @NoArgsConstructor

@@ -13,8 +13,6 @@
  */
 package com.unitvectory.serviceauditreport.service.github.model;
 
-import com.unitvectory.serviceauditreport.core.AbstractData;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -25,12 +23,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class GitHubOrganization implements AbstractData {
+public class GitHubOrganization {
 
     private String name;
-
-    @Override
-    public String getDataId() {
-        return this.name;
-    }
 }

@@ -13,30 +13,11 @@
  */
 package com.unitvectory.serviceauditreport.service.github.collector;
 
-import com.unitvectory.serviceauditreport.collector.AbstractCollectorTask;
-import com.unitvectory.serviceauditreport.collector.CollectorDataContext;
-import com.unitvectory.serviceauditreport.collector.CollectorDataProduct;
-import com.unitvectory.serviceauditreport.core.TaskInputTypes;
-import com.unitvectory.serviceauditreport.core.TaskOutputTypes;
-import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
-import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
-import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositorySummary;
-
 /**
  * The GitHubRepositorySummary collector
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class GitHubRepositorySummaryCollector extends AbstractCollectorTask {
-
-    public GitHubRepositorySummaryCollector(AbstractPersistenceService persistenceService) {
-        super(TaskInputTypes.builder().type(GitHubOrganization.class).build(), TaskOutputTypes.builder().type(GitHubRepositorySummary.class).build(), persistenceService);
-    }
-
-    @Override
-    public CollectorDataProduct executeCollector(CollectorDataContext dataContext) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'executeCollector'");
-    }
+public class GitHubRepositorySummaryCollector {
 
 }

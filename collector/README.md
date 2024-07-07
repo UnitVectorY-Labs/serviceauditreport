@@ -1,3 +1,0 @@
-# collector
-
-The collector library

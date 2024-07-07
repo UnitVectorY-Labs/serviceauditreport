@@ -13,14 +13,9 @@
  */
 package com.unitvectory.serviceauditreport.analyzer.app;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.pmw.tinylog.Logger;
 
-import com.unitvectory.serviceauditreport.analyzer.app.service.AnalyzerService;
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
-import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
 
 import lombok.AllArgsConstructor;
 
@@ -29,26 +24,17 @@ import lombok.AllArgsConstructor;
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@SpringBootApplication(scanBasePackages = "com.unitvectory.serviceauditreport")
 @AllArgsConstructor
 public class AnalyzerApp extends AbstractApp {
-
-    private static Logger LOG = LoggerFactory.getLogger(AnalyzerApp.class);
-
-    private AnalyzerService analyzerService;
 
     @Override
     protected String getAppName() {
         return "analyzer";
     }
 
-    @Override
-    protected AbstractAppService getAppService() {
-        return this.analyzerService;
-    }
-
     public static void main(String[] args) {
-        SpringApplication.run(AnalyzerApp.class, args);
-        LOG.info("APPLICATION FINISHED");
+        Logger.info("APPLICATION STARTED");
+        new AnalyzerApp().run(args);
+        Logger.info("APPLICATION FINISHED");
     }
 }

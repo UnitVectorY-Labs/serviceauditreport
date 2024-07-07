@@ -13,45 +13,11 @@
  */
 package com.unitvectory.serviceauditreport.service.github.collector;
 
-import com.unitvectory.serviceauditreport.collector.AbstractCollectorTask;
-import com.unitvectory.serviceauditreport.collector.CollectorDataContext;
-import com.unitvectory.serviceauditreport.collector.CollectorDataProduct;
-import com.unitvectory.serviceauditreport.core.TaskInputTypes;
-import com.unitvectory.serviceauditreport.core.TaskOutputTypes;
-import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
-import com.unitvectory.serviceauditreport.service.github.model.GitHubCollectorConfig;
-import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
-
 /**
  * The GitHubOrganization collector
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class GitHubOrganizationCollector extends AbstractCollectorTask {
+public class GitHubOrganizationCollector {
 
-    public GitHubOrganizationCollector(AbstractPersistenceService persistenceService) {
-        super(TaskInputTypes.builder().type(GitHubCollectorConfig.class).build(),
-                TaskOutputTypes.builder().type(GitHubOrganization.class).build(), persistenceService);
-    }
-
-    @Override
-    public CollectorDataProduct executeCollector(CollectorDataContext dataContext) {
-
-        CollectorDataProduct product = new CollectorDataProduct();
-
-        GitHubCollectorConfig config = dataContext.getSingularData(GitHubCollectorConfig.class);
-        if (config == null) {
-            return product;
-        }
-
-        String organization = config.getOrganization();
-        if (organization == null || organization.isEmpty()) {
-            return product;
-        }
-
-        GitHubOrganization org = new GitHubOrganization(organization);
-        product.setSingularData(GitHubOrganization.class, org);
-
-        return product;
-    }
 }
