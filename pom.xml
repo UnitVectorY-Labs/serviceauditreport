@@ -17,14 +17,24 @@
     <description>serviceauditreport</description>
 
     <modules>
+        <module>serviceauditcore</module>
         <module>core</module>
         <module>core-app</module>
     </modules>
     <profiles>
+        
+        <profile>
+            <id>core</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+            </modules>
+        </profile>
         <profile>
             <id>collector</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <modules>
                 <module>collector</module>
@@ -36,7 +46,7 @@
         <profile>
             <id>analyzer</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <modules>
                 <module>analyzer</module>
@@ -46,7 +56,7 @@
         <profile>
             <id>reporter</id>
             <activation>
-                <activeByDefault>true</activeByDefault>
+                <activeByDefault>false</activeByDefault>
             </activation>
             <modules>
                 <module>reporter</module>
