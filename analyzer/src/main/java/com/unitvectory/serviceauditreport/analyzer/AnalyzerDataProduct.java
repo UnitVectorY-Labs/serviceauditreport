@@ -13,6 +13,7 @@
  */
 package com.unitvectory.serviceauditreport.analyzer;
 
+import com.unitvectory.serviceauditreport.core.AbstractData;
 import com.unitvectory.serviceauditreport.core.DataProduct;
 
 /**
@@ -23,9 +24,8 @@ import com.unitvectory.serviceauditreport.core.DataProduct;
 public class AnalyzerDataProduct implements DataProduct {
 
     @Override
-    public <T> void setSingularData(Class<T> type, T data) {
+    public <T extends AbstractData> void setSingularData(Class<T> type, T data) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'setSingularData'");
     }
-
 }

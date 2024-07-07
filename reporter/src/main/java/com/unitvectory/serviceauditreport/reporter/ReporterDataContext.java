@@ -15,6 +15,7 @@ package com.unitvectory.serviceauditreport.reporter;
 
 import java.util.List;
 
+import com.unitvectory.serviceauditreport.core.AbstractData;
 import com.unitvectory.serviceauditreport.core.DataContext;
 
 /**
@@ -25,13 +26,13 @@ import com.unitvectory.serviceauditreport.core.DataContext;
 public class ReporterDataContext implements DataContext {
 
     @Override
-    public <T> T getSingularData(Class<T> type) {
+    public <T extends AbstractData> T getSingularData(Class<T> type) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getSingularData'");
     }
 
     @Override
-    public <T> List<T> getAllData(Class<T> type) {
+    public <T extends AbstractData> List<T> getAllData(Class<T> type) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllData'");
     }

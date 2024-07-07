@@ -18,6 +18,7 @@ import com.unitvectory.serviceauditreport.collector.CollectorDataContext;
 import com.unitvectory.serviceauditreport.collector.CollectorDataProduct;
 import com.unitvectory.serviceauditreport.core.TaskInputTypes;
 import com.unitvectory.serviceauditreport.core.TaskOutputTypes;
+import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubCollectorConfig;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
 
@@ -28,9 +29,9 @@ import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganizatio
  */
 public class GitHubOrganizationCollector extends AbstractCollectorTask {
 
-    public GitHubOrganizationCollector() {
+    public GitHubOrganizationCollector(AbstractPersistenceService persistenceService) {
         super(TaskInputTypes.builder().type(GitHubCollectorConfig.class).build(),
-                TaskOutputTypes.builder().type(GitHubOrganization.class).build());
+                TaskOutputTypes.builder().type(GitHubOrganization.class).build(), persistenceService);
     }
 
     @Override

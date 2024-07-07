@@ -18,6 +18,7 @@ import com.unitvectory.serviceauditreport.core.DataContext;
 import com.unitvectory.serviceauditreport.core.DataProduct;
 import com.unitvectory.serviceauditreport.core.TaskInputTypes;
 import com.unitvectory.serviceauditreport.core.TaskOutputTypes;
+import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
 
 import lombok.AllArgsConstructor;
 
@@ -33,10 +34,12 @@ public abstract class AbstractCollectorTask implements AbstractTask {
 
     private TaskOutputTypes outputTypes;
 
+    private AbstractPersistenceService persistenceService;
+
     @Override
     public final DataProduct execute(DataContext dataContext) {
         // TODO: Scope the data context to the input types
-        CollectorDataContext collectorDataContext = new CollectorDataContext();
+        CollectorDataContext collectorDataContext = new CollectorDataContext(persistenceService);
 
         return this.executeCollector(collectorDataContext);
     }

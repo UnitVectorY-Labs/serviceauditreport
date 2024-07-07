@@ -26,6 +26,12 @@
             <artifactId>collector</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <!-- Goal is to not have this be a compile time dependency -->
+        <dependency>
+            <groupId>com.unitvectory.serviceauditreport</groupId>
+            <artifactId>service-demo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

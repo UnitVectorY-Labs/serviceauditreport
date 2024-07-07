@@ -29,7 +29,7 @@ public interface DataContext {
      * @param type the data type
      * @return the data
      */
-    <T> T getSingularData(Class<T> type);
+    <T extends AbstractData> T getSingularData(Class<T> type);
 
     /**
      * Get the data
@@ -38,6 +38,6 @@ public interface DataContext {
      * @param type the data type
      * @return the data
      */
-    <T> List<T> getAllData(Class<T> type);
+    <T extends AbstractData> List<T> getAllData(Class<T> type);
 
 }

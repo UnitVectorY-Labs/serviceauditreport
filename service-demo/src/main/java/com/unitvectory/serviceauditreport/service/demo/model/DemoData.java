@@ -15,6 +15,8 @@ package com.unitvectory.serviceauditreport.service.demo.model;
 
 import java.util.List;
 
+import com.unitvectory.serviceauditreport.core.AbstractData;
+
 import lombok.Data;
 
 /**
@@ -23,8 +25,14 @@ import lombok.Data;
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Data
-public class DemoData {
+public class DemoData implements AbstractData {
 
     private List<DemoDataPoint> data;
+
+    @Override
+    public String getDataId() {
+        // There can be only one
+        return "demo";
+    }
     
 }

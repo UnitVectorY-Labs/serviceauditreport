@@ -18,6 +18,7 @@ import com.unitvectory.serviceauditreport.collector.CollectorDataContext;
 import com.unitvectory.serviceauditreport.collector.CollectorDataProduct;
 import com.unitvectory.serviceauditreport.core.TaskInputTypes;
 import com.unitvectory.serviceauditreport.core.TaskOutputTypes;
+import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
 import com.unitvectory.serviceauditreport.service.demo.model.DemoData;
 import com.unitvectory.serviceauditreport.service.demo.model.DemoDataPoint;
 
@@ -28,8 +29,8 @@ import com.unitvectory.serviceauditreport.service.demo.model.DemoDataPoint;
  */
 public class DemoCollector extends AbstractCollectorTask {
 
-    public DemoCollector() {
-        super(TaskInputTypes.builder().build(), TaskOutputTypes.builder().type(DemoData.class).build());
+    public DemoCollector(AbstractPersistenceService persistenceService) {
+        super(TaskInputTypes.builder().build(), TaskOutputTypes.builder().type(DemoData.class).build(), persistenceService);
     }
 
     @Override

@@ -13,6 +13,8 @@
  */
 package com.unitvectory.serviceauditreport.service.github.model;
 
+import com.unitvectory.serviceauditreport.core.AbstractData;
+
 import lombok.Data;
 
 /**
@@ -21,9 +23,14 @@ import lombok.Data;
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Data
-public class GitHubCollectorConfig {
+public class GitHubCollectorConfig  implements AbstractData {
 
     private String organization;
 
     private String token;
+
+    @Override
+    public String getDataId() {
+        return "config";
+    }
 }

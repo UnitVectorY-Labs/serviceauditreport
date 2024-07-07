@@ -18,6 +18,7 @@ import com.unitvectory.serviceauditreport.collector.CollectorDataContext;
 import com.unitvectory.serviceauditreport.collector.CollectorDataProduct;
 import com.unitvectory.serviceauditreport.core.TaskInputTypes;
 import com.unitvectory.serviceauditreport.core.TaskOutputTypes;
+import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositorySummary;
 
@@ -28,8 +29,8 @@ import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositoryS
  */
 public class GitHubRepositorySummaryCollector extends AbstractCollectorTask {
 
-    public GitHubRepositorySummaryCollector() {
-        super(TaskInputTypes.builder().type(GitHubOrganization.class).build(), TaskOutputTypes.builder().type(GitHubRepositorySummary.class).build());
+    public GitHubRepositorySummaryCollector(AbstractPersistenceService persistenceService) {
+        super(TaskInputTypes.builder().type(GitHubOrganization.class).build(), TaskOutputTypes.builder().type(GitHubRepositorySummary.class).build(), persistenceService);
     }
 
     @Override

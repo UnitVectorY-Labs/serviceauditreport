@@ -15,23 +15,31 @@ package com.unitvectory.serviceauditreport.collector;
 
 import java.util.List;
 
+import com.unitvectory.serviceauditreport.core.AbstractData;
 import com.unitvectory.serviceauditreport.core.DataContext;
+import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
+
+import lombok.AllArgsConstructor;
 
 /**
  * The collector data context
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
+@AllArgsConstructor
 public class CollectorDataContext implements DataContext {
 
+    private final AbstractPersistenceService persistenceService;
+
     @Override
-    public <T> T getSingularData(Class<T> type) {
+    public <T extends AbstractData> T getSingularData(Class<T> type) {
+
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getSingularData'");
     }
 
     @Override
-    public <T> List<T> getAllData(Class<T> type) {
+    public <T extends AbstractData> List<T> getAllData(Class<T> type) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getAllData'");
     }

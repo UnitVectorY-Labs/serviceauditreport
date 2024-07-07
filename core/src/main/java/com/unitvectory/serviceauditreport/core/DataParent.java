@@ -11,22 +11,19 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.collector;
+package com.unitvectory.serviceauditreport.core;
 
-import com.unitvectory.serviceauditreport.core.AbstractData;
-import com.unitvectory.serviceauditreport.core.DataProduct;
+import lombok.Data;
 
 /**
- * The collector data product
+ * The abstract data
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class CollectorDataProduct implements DataProduct {
+@Data
+public class DataParent {
 
-    @Override
-    public <T extends AbstractData> void setSingularData(Class<T> type, T data) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSingularData'");
-    }
+    private final Class<? extends AbstractData> parentClass;
 
+    private final String parentId;
 }

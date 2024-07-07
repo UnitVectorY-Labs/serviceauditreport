@@ -27,6 +27,6 @@ public interface DataProduct {
      * @param type the data type
      * @param data the data to store
      */
-    <T> void setSingularData(Class<T> type, T data);
+    <T extends AbstractData> void setSingularData(Class<T> type, T data);
 
 }

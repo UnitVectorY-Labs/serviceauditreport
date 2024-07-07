@@ -11,29 +11,29 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.service.demo.config;
+package com.unitvectory.serviceauditreport.core.app.config;
+
+import java.io.File;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.unitvectory.serviceauditreport.core.app.persistence.FilePersistenceService;
 import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
-import com.unitvectory.serviceauditreport.service.demo.collector.DemoCollector;
-
-import lombok.AllArgsConstructor;
 
 /**
- * The DemoServiceConfig
+ * The PersistenceConfig
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Configuration
-@AllArgsConstructor
-public class DemoServiceConfig {
-
-    private AbstractPersistenceService persistenceService;
+public class PersistenceConfig {
 
     @Bean
-    public DemoCollector demoCollector() {
-        return new DemoCollector(persistenceService);
+    public AbstractPersistenceService persistenceService() {
+        // TODO: Do a better job defining the ObjectMapper using a bean
+        // TODO: Do a better job defining the root directory
+        return new FilePersistenceService(new ObjectMapper(), new File("data"));
     }
 }

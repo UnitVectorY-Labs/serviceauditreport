@@ -21,8 +21,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import com.unitvectory.serviceauditreport.collector.AbstractCollectorTask;
+import com.unitvectory.serviceauditreport.collector.CollectorDataContext;
 import com.unitvectory.serviceauditreport.core.app.service.AbstractAppService;
 import com.unitvectory.serviceauditreport.core.model.AbstractConfig;
+import com.unitvectory.serviceauditreport.core.persistence.AbstractPersistenceService;
 
 import lombok.AllArgsConstructor;
 
@@ -39,15 +41,21 @@ public class CollectorService extends AbstractAppService {
 
     private ApplicationContext applicationContext;
 
+    private AbstractPersistenceService persistenceService;
+
     @Override
     public void run(AbstractConfig config) {
         LOG.info("Loading collectors to run...");
         Map<String, AbstractCollectorTask> beansOfType = applicationContext.getBeansOfType(AbstractCollectorTask.class,
                 true, true);
 
+                CollectorDataContext collectorDataContext = new CollectorDataContext(persistenceService);
+
         for (Map.Entry<String, AbstractCollectorTask> entry : beansOfType.entrySet()) {
             AbstractCollectorTask collector = entry.getValue();
             System.out.println("Bean name: " + entry.getKey() + ", Bean instance: " + entry.getValue());
+
+            // collector.execute(null);
         }
 
         LOG.info("Data collection finished.");
