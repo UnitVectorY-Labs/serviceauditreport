@@ -16,11 +16,11 @@ package com.unitvectory.serviceauditreport.serviceauditcore;
 import java.util.List;
 
 /**
- * The abstract data manager class.
+ * The DataManagerHierarchical interface.
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public interface AbstractDataManager {
+public interface DataManagerHierarchical extends DataManager {
 
     /**
      * Loads the instances of the class.
@@ -64,6 +64,13 @@ public interface AbstractDataManager {
      */
     <T> void save(Class<T> clazz, T instance, ParentIdentifier parentIdentifier);
 
+    /**
+     * Saves the instances of the class.
+     * 
+     * @param <T>       the class type
+     * @param clazz     the class type
+     * @param instances the instances of the class
+     */
     default <T> void save(Class<T> clazz, List<T> instances) {
         save(clazz, instances, null);
     }
@@ -77,26 +84,5 @@ public interface AbstractDataManager {
      * @param parentIdentifier the parent identifier for where to save the instances
      */
     <T> void save(Class<T> clazz, List<T> instances, ParentIdentifier parentIdentifier);
-
-    /**
-     * Loads all instances of the class.
-     * 
-     * @param <T>   the class type
-     * @param clazz the class type
-     * @return the instances of the class
-     */
-    default <T> List<T> loadAll(Class<T> clazz) {
-        return loadAll(clazz, null);
-    }
-
-    /**
-     * Loads all instances of the class.
-     * 
-     * @param <T>              the class type
-     * @param clazz            the class type
-     * @param parentIdentifier the parent identifier for where to load the instances
-     * @return the instances of the class
-     */
-    <T> List<T> loadAll(Class<T> clazz, ParentIdentifier parentIdentifier);
 
 }

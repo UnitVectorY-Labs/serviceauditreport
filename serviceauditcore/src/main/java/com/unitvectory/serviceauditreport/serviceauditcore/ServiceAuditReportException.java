@@ -13,21 +13,14 @@
  */
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
+import lombok.experimental.StandardException;
+
 /**
- * The abstract service class.
+ * The ServiceAuditReportException
  * 
- * @param <O> the output type of the service
- * @param <C> the configuration type of the service
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public abstract class AbstractService<O, C> {
+@StandardException
+public class ServiceAuditReportException extends RuntimeException {
 
-    /**
-     * Executes the logic for the service to collect the required data
-     * 
-     * @param dataManager   the data manager, used to look up data
-     * @param configuration the configuration for this specific service
-     * @return the output of the service
-     */
-    public abstract O execute(DataManagerRead dataManager, C configuration);
 }

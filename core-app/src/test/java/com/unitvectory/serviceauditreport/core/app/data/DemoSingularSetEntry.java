@@ -11,23 +11,29 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.serviceauditcore;
+package com.unitvectory.serviceauditreport.core.app.data;
+
+import com.unitvectory.serviceauditreport.serviceauditcore.AccessType;
+import com.unitvectory.serviceauditreport.serviceauditcore.DataEntity;
+import com.unitvectory.serviceauditreport.serviceauditcore.SetIdentifier;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
- * The abstract service class.
+ * The DemoSingularSetEntry
  * 
- * @param <O> the output type of the service
- * @param <C> the configuration type of the service
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public abstract class AbstractService<O, C> {
+@DataEntity(accessType = AccessType.SET, parent = DemoSingularEntry.class)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class DemoSingularSetEntry {
 
-    /**
-     * Executes the logic for the service to collect the required data
-     * 
-     * @param dataManager   the data manager, used to look up data
-     * @param configuration the configuration for this specific service
-     * @return the output of the service
-     */
-    public abstract O execute(DataManagerRead dataManager, C configuration);
+    @SetIdentifier
+    private String id;
+
+    private String val;
 }

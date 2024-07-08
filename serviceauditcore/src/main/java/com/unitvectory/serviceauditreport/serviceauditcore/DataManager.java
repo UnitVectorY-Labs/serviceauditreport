@@ -14,20 +14,10 @@
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
 /**
- * The abstract service class.
+ * The DataManager interface.
  * 
- * @param <O> the output type of the service
- * @param <C> the configuration type of the service
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public abstract class AbstractService<O, C> {
+public interface DataManager extends DataManagerRead, DataManagerWrite {
 
-    /**
-     * Executes the logic for the service to collect the required data
-     * 
-     * @param dataManager   the data manager, used to look up data
-     * @param configuration the configuration for this specific service
-     * @return the output of the service
-     */
-    public abstract O execute(DataManagerRead dataManager, C configuration);
 }

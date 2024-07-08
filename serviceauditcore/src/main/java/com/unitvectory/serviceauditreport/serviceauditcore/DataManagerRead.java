@@ -13,21 +13,21 @@
  */
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
+import java.util.List;
+
 /**
- * The abstract service class.
+ * The DataManagerRead interface.
  * 
- * @param <O> the output type of the service
- * @param <C> the configuration type of the service
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public abstract class AbstractService<O, C> {
+public interface DataManagerRead {
 
     /**
-     * Executes the logic for the service to collect the required data
+     * Loads the instances of the class.
      * 
-     * @param dataManager   the data manager, used to look up data
-     * @param configuration the configuration for this specific service
-     * @return the output of the service
+     * @param <T>   the class type
+     * @param clazz the class type
+     * @return the instances of the class
      */
-    public abstract O execute(DataManagerRead dataManager, C configuration);
+    <T> List<T> load(Class<T> clazz);
 }
