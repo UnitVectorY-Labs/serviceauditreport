@@ -45,7 +45,7 @@ public class FileDataManager implements DataManagerHierarchical {
     public <T> List<T> load(@NonNull Class<T> clazz, ParentIdentifier parentIdentifier) {
         DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
 
-        File folder = this.getFolder(parentIdentifier);
+        File folder = this.getFolder(rootFolder, parentIdentifier, true);
 
         String name = clazz.getName();
 
@@ -81,7 +81,7 @@ public class FileDataManager implements DataManagerHierarchical {
     public <T> void save(@NonNull Class<T> clazz, @NonNull T instance, ParentIdentifier parentIdentifier) {
         DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
 
-        File folder = this.getFolder(parentIdentifier);
+        File folder = this.getFolder(rootFolder, parentIdentifier, true);
 
         String name = clazz.getName();
 
@@ -115,7 +115,7 @@ public class FileDataManager implements DataManagerHierarchical {
     public <T> void save(@NonNull Class<T> clazz, @NonNull List<T> instances, ParentIdentifier parentIdentifier) {
         DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
 
-        File folder = this.getFolder(parentIdentifier);
+        File folder = this.getFolder(rootFolder, parentIdentifier, true);
 
         String name = clazz.getName();
 
@@ -164,19 +164,31 @@ public class FileDataManager implements DataManagerHierarchical {
         }
     }
 
-    private File getFolder(ParentIdentifier parentIdentifier) {
-        File file = rootFolder;
+    private File getFolder(File folder, ParentIdentifier parentIdentifier, boolean root) {
 
-        // Iterate throught the parents to get the directory
-        ParentIdentifier parent = parentIdentifier;
-        while (parent != null) {
-            file = new File(file, parent.getId());
-            parent = parent.getAncestor();
+        // No parent, return the folder
+        if (parentIdentifier == null) {
+            return folder;
         }
 
-        // Make the folder
-        file.mkdirs();
+        // Recurse to the root parent
+        if (parentIdentifier.getAncestor() != null || parentIdentifier.getType() == Void.class) {
+            folder = this.getFolder(folder, parentIdentifier.getAncestor(), false);
+        }
 
-        return file;
+        // Add the folder with the class name
+        folder = new File(folder, parentIdentifier.getType().getName());
+
+        // Add the folder with the id
+        if (parentIdentifier.getId() != null) {
+            folder = new File(folder, parentIdentifier.getId());
+        }
+
+        // If we are at the root, make the required directories
+        if (root) {
+            folder.mkdirs();
+        }
+
+        return folder;
     }
 }

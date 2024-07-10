@@ -13,6 +13,7 @@
  */
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
+import lombok.NonNull;
 import lombok.Value;
 
 /**
@@ -39,4 +40,39 @@ public class ParentIdentifier {
      * Allows for a parent to have a parent for an arbitrary number of levels.
      */
     private final ParentIdentifier ancestor;
+
+    /**
+     * Create a new parent identifier.
+     * 
+     * This must be constructed from the root
+     * 
+     * @param object   the object
+     * @param ancestor the ancestor
+     * @return the parent identifier
+     */
+    public static ParentIdentifier of(@NonNull Object object, ParentIdentifier ancestor) {
+        DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(object.getClass());
+        if (AccessType.SINGULAR.equals(dataEntity.accessType())) {
+            // Singular
+            return new ParentIdentifier(null, object.getClass(), ancestor);
+        } else if (AccessType.SET.equals(dataEntity.accessType())) {
+            // Set
+            String id = AnnotationUtils.getSetIdentifierValue(object);
+            return new ParentIdentifier(id, object.getClass(), ancestor);
+        } else {
+            throw new ServiceAuditReportException("Unknown access type: " + dataEntity.accessType());
+        }
+    }
+
+    /**
+     * Create a new parent identifier.
+     * 
+     * This has no ancestors.
+     * 
+     * @param object the object
+     * @return the parent identifier
+     */
+    public static ParentIdentifier of(@NonNull Object object) {
+        return of(object, null);
+    }
 }

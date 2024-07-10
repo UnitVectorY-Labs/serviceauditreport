@@ -86,6 +86,11 @@
                 <version>1.18.34</version>
             </dependency>
             <dependency>
+                <groupId>com.unitvectory</groupId>
+                <artifactId>jsonassertify</artifactId>
+                <version>0.0.1</version>
+            </dependency>
+            <dependency>
                 <groupId>org.junit.jupiter</groupId>
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>5.10.3</version>
