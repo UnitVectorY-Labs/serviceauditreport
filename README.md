@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Concept](https://img.shields.io/badge/Status-Concept-white)](https://unitvectory-labs.github.io/uvy-labs-guide/bestpractices/status/#concept)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Concept](https://img.shields.io/badge/Status-Concept-white)](https://unitvectory-labs.github.io/uvy-labs-guide/bestpractices/status/#concept) [![codecov](https://codecov.io/gh/UnitVectorY-Labs/serviceauditreport/graph/badge.svg?token=OI0wXYykNb)](https://codecov.io/gh/UnitVectorY-Labs/serviceauditreport)
 
 # serviceauditreport
 A tool for auditing and reporting on the configuration compliance of various services
