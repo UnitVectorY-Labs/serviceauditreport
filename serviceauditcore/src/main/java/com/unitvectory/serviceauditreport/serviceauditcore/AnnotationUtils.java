@@ -15,6 +15,7 @@ package com.unitvectory.serviceauditreport.serviceauditcore;
 
 import java.lang.reflect.Field;
 
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -34,7 +35,7 @@ public class AnnotationUtils {
      * @return the value of the field annotated with @SetIdentifier, or null if not
      *         found
      */
-    public static <T> String getSetIdentifierValue(T instance) {
+    public static <T> String getSetIdentifierValue(@NonNull T instance) {
         try {
             Class<?> clazz = instance.getClass();
             for (Field field : clazz.getDeclaredFields()) {
@@ -53,7 +54,8 @@ public class AnnotationUtils {
                 }
             }
 
-            return null;
+            throw new ServiceAuditReportException(
+                    "No field annotated with @SetIdentifier found in class " + clazz.getName());
         } catch (Exception e) {
             throw new ServiceAuditReportException("failed to get identifier value", e);
         }
@@ -65,7 +67,7 @@ public class AnnotationUtils {
      * @param clazz the class to get the annotation from
      * @return the DataEntity annotation, or null if not present
      */
-    public static DataEntity getDataEntityAnnotation(Class<?> clazz) {
+    public static DataEntity getDataEntityAnnotation(@NonNull Class<?> clazz) {
         if (clazz.isAnnotationPresent(DataEntity.class)) {
             return clazz.getAnnotation(DataEntity.class);
         }
