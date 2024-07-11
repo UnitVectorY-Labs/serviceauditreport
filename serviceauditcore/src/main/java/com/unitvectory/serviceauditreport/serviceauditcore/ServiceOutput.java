@@ -13,21 +13,37 @@
  */
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * The abstract service class.
+ * The service output class.
  * 
- * @param <O> the output of the service
- * @param <C> the configuration type of the service
+ * @param <O> the output type of the service
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public abstract class AbstractService<O, C> {
+public class ServiceOutput<O> {
 
     /**
-     * Executes the logic for the service to collect the required data
-     * 
-     * @param dataManager   the data manager, used to look up data
-     * @param configuration the configuration for this specific service
-     * @return the output of the service
+     * The output list.
      */
-    public abstract ServiceOutput<O> execute(DataManagerRead dataManager, C configuration);
+    private final List<O> output;
+
+    /**
+     * Creates a new service output.
+     */
+    public ServiceOutput() {
+        this.output = new ArrayList<>();
+    }
+
+    /**
+     * Gets the output.
+     * 
+     * @param item the item to add
+     * @return the output
+     */
+    public ServiceOutput<O> add(O item) {
+        this.output.add(item);
+        return this;
+    }
 }

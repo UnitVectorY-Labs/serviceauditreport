@@ -18,6 +18,7 @@ import com.unitvectory.serviceauditreport.service.github.model.GitHubConfig;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
 import com.unitvectory.serviceauditreport.serviceauditcore.AbstractService;
 import com.unitvectory.serviceauditreport.serviceauditcore.DataManagerRead;
+import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
 
 /**
  * The GitHubOrganizationCollectorService
@@ -27,17 +28,15 @@ import com.unitvectory.serviceauditreport.serviceauditcore.DataManagerRead;
 public class GitHubOrganizationCollectorService extends AbstractService<GitHubOrganization, GitHubConfig> {
 
     @Override
-    public GitHubOrganization execute(DataManagerRead dataManager, GitHubConfig configuration) {
+    public ServiceOutput<GitHubOrganization> execute(DataManagerRead dataManager, GitHubConfig configuration) {
 
         GitHubClient client = new GitHubClient(configuration.getToken());
 
-        // TODO: The AbstractService interface needs to be refactored to allow for 0, 1,
-        // or n instances of a class to be returned
+        ServiceOutput<GitHubOrganization> output = new ServiceOutput<>();
         for (String org : configuration.getOrganization()) {
-            // client.getOrganization(org);
-
+            output.add(client.getOrganization(org));
         }
 
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
+        return output;
     }
 }

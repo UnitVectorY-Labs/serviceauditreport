@@ -27,6 +27,5 @@ public class GitHubConfig {
 
     private String token;
 
-
     private List<String> organization;
 }

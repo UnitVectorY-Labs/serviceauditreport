@@ -13,12 +13,16 @@
  */
 package com.unitvectory.serviceauditreport.service.github.collector;
 
+import java.util.List;
+
+import com.unitvectory.serviceauditreport.service.github.client.GitHubClient;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubConfig;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositorySummary;
 import com.unitvectory.serviceauditreport.serviceauditcore.AbstractService;
 import com.unitvectory.serviceauditreport.serviceauditcore.DataManagerRead;
 import com.unitvectory.serviceauditreport.serviceauditcore.ServiceInput;
+import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
 
 /**
  * The GitHubRepositorySummaryCollectorService
@@ -28,10 +32,42 @@ import com.unitvectory.serviceauditreport.serviceauditcore.ServiceInput;
 @ServiceInput(GitHubOrganization.class)
 public class GitHubRepositorySummaryCollectorService extends AbstractService<GitHubRepositorySummary, GitHubConfig> {
 
+    private static final int PERPAGE = 1;
+
     @Override
-    public GitHubRepositorySummary execute(DataManagerRead dataManager, GitHubConfig configuration) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'execute'");
+    public ServiceOutput<GitHubRepositorySummary> execute(DataManagerRead dataManager, GitHubConfig configuration) {
+
+        GitHubClient client = new GitHubClient(configuration.getToken());
+
+        // Load the organizations that we are looking up for (in practice this will only
+        // be 1 item)
+        List<GitHubOrganization> orgs = dataManager.load(GitHubOrganization.class);
+
+        // The output
+        ServiceOutput<GitHubRepositorySummary> output = new ServiceOutput<>();
+
+        // Get the organization
+        for (GitHubOrganization org : orgs) {
+
+            String organization = org.getLogin();
+            int page = 1;
+            int size = 1;
+            while (size > 0) {
+                // Read a page of repositories from the API
+                List<GitHubRepositorySummary> repositories = client.getRepositories(organization, PERPAGE, page);
+
+                // Add the repositories to the output
+                for (GitHubRepositorySummary repository : repositories) {
+                    output.add(repository);
+                }
+
+                // If we have more than 0 items, then we need to read the next page
+                size = repositories.size();
+                page++;
+            }
+        }
+
+        return output;
     }
 
 }
