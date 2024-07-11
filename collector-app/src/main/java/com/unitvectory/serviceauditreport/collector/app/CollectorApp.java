@@ -29,6 +29,10 @@ public class CollectorApp extends AbstractApp {
         return "collector";
     }
 
+    /**
+     * The Collector App main method
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         Logger.info("APPLICATION STARTED");
         new CollectorApp().run(args);

@@ -11,34 +11,21 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.reporter.app;
+package com.unitvectory.serviceauditreport.service.github;
 
-import org.pmw.tinylog.Logger;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.unitvectory.serviceauditreport.core.app.AbstractApp;
-
-import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.Test;
 
 /**
- * The Reporter App
+ * The GitHubTest
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@AllArgsConstructor
-public class ReporterApp extends AbstractApp {
+public class GitHubTest {
 
-    @Override
-    protected String getAppName() {
-        return "reporter";
-    }
-
-    /**
-     * The Reporter App main method
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        Logger.info("APPLICATION STARTED");
-        new ReporterApp().run(args);
-        Logger.info("APPLICATION FINISHED");
+    @Test
+    public void test() {
+        assertNotNull(new GitHub());
     }
 }

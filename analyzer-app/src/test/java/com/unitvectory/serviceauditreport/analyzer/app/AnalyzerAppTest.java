@@ -11,34 +11,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.reporter.app;
+package com.unitvectory.serviceauditreport.analyzer.app;
 
-import org.pmw.tinylog.Logger;
-
-import com.unitvectory.serviceauditreport.core.app.AbstractApp;
-
-import lombok.AllArgsConstructor;
+import org.junit.jupiter.api.Test;
 
 /**
- * The Reporter App
+ * The Analyzer App Test
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@AllArgsConstructor
-public class ReporterApp extends AbstractApp {
+public class AnalyzerAppTest {
 
-    @Override
-    protected String getAppName() {
-        return "reporter";
-    }
-
-    /**
-     * The Reporter App main method
-     * @param args the arguments
-     */
-    public static void main(String[] args) {
-        Logger.info("APPLICATION STARTED");
-        new ReporterApp().run(args);
-        Logger.info("APPLICATION FINISHED");
+    @Test
+    public void analyzerAppTest() {
+        // Test the main method which will error as missing parameters
+        AnalyzerApp.main(new String[] {});
     }
 }

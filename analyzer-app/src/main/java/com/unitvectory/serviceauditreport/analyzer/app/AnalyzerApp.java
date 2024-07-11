@@ -32,6 +32,10 @@ public class AnalyzerApp extends AbstractApp {
         return "analyzer";
     }
 
+    /**
+     * The Analyzer App main method
+     * @param args the arguments
+     */
     public static void main(String[] args) {
         Logger.info("APPLICATION STARTED");
         new AnalyzerApp().run(args);
