@@ -11,20 +11,30 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.collector.app;
+package com.unitvectory.serviceauditreport.core.app;
 
-import org.junit.jupiter.api.Test;
+import org.pmw.tinylog.Logger;
 
 /**
- * The CollectorAppTest
+ * The Demo App
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class CollectorAppTest {
+public class DemoApp extends AbstractApp {
 
-    @Test
-    public void collectorAppTest() {
-        // Test the main method which will error as missing parameters
-        CollectorApp.main(new String[] {});
+    @Override
+    protected String getAppName() {
+        return "demo";
+    }
+
+    /**
+     * The Demo App main method
+     * 
+     * @param args the arguments
+     */
+    public static void main(String[] args) {
+        Logger.info("APPLICATION STARTED");
+        new DemoApp().run(args);
+        Logger.info("APPLICATION FINISHED");
     }
 }

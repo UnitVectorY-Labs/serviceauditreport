@@ -11,20 +11,20 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.collector.app;
+package com.unitvectory.serviceauditreport.core.app;
 
 import org.junit.jupiter.api.Test;
 
 /**
- * The CollectorAppTest
+ * The Demo App Test
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class CollectorAppTest {
+public class DemoAppTest {
 
     @Test
-    public void collectorAppTest() {
+    public void demoAppTest() {
         // Test the main method which will error as missing parameters
-        CollectorApp.main(new String[] {});
+        DemoApp.main(new String[] {});
     }
 }

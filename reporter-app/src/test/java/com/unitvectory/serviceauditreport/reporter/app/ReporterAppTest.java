@@ -23,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class ReporterAppTest {
 
     @Test
-    public void analyzerAppTest() {
+    public void reporterAppTest() {
         // Test the main method which will error as missing parameters
         ReporterApp.main(new String[] {});
     }
