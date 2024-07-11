@@ -18,14 +18,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.unitvectory.serviceauditreport.serviceauditcore.AccessType;
+import com.unitvectory.serviceauditreport.serviceauditcore.DataEntity;
+import com.unitvectory.serviceauditreport.serviceauditcore.SetIdentifier;
+
 /**
  * The GitHubRepositorySummary
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
+@DataEntity(accessType = AccessType.SINGULAR, parent = GitHubOrganization.class)
 @Data
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GitHubRepositorySummary {
+
+    @SetIdentifier
     private int id;
     private String nodeId;
     private String name;
@@ -75,6 +84,7 @@ public class GitHubRepositorySummary {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Owner {
         private String name;
         private String email;
@@ -90,6 +100,7 @@ public class GitHubRepositorySummary {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Permissions {
         private boolean admin;
         private boolean maintain;
@@ -100,6 +111,7 @@ public class GitHubRepositorySummary {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class CodeOfConduct {
         private String key;
         private String name;
@@ -108,6 +120,7 @@ public class GitHubRepositorySummary {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class License {
         private String key;
         private String name;
@@ -117,6 +130,7 @@ public class GitHubRepositorySummary {
 
     @Data
     @NoArgsConstructor
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SecurityAndAnalysis {
         private AdvancedSecurity advancedSecurity;
         private DependabotSecurityUpdates dependabotSecurityUpdates;
@@ -125,24 +139,28 @@ public class GitHubRepositorySummary {
 
         @Data
         @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class AdvancedSecurity {
             private String status;
         }
 
         @Data
         @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class DependabotSecurityUpdates {
             private String status;
         }
 
         @Data
         @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class SecretScanning {
             private String status;
         }
 
         @Data
         @NoArgsConstructor
+        @JsonIgnoreProperties(ignoreUnknown = true)
         public static class SecretScanningPushProtection {
             private String status;
         }

@@ -13,17 +13,47 @@
  */
 package com.unitvectory.serviceauditreport.service.github.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.unitvectory.serviceauditreport.serviceauditcore.AccessType;
+import com.unitvectory.serviceauditreport.serviceauditcore.DataEntity;
+import com.unitvectory.serviceauditreport.serviceauditcore.SetIdentifier;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * The GitHubOrganization
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
+@DataEntity(accessType = AccessType.SET)
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class GitHubOrganization {
 
+    @SetIdentifier
+    private long id;
+    private String login;
+    private String node_id;
+    private String description;
     private String name;
+    private String company;
+    private String blog;
+    private String location;
+    private String email;
+    private String twitter_username;
+    private boolean is_verified;
+    private boolean has_organization_projects;
+    private boolean has_repository_projects;
+    private int public_repos;
+    private int public_gists;
+    private int followers;
+    private int following;
+    private String created_at;
+    private String updated_at;
+    private String archived_at;
+    private String type;
 }

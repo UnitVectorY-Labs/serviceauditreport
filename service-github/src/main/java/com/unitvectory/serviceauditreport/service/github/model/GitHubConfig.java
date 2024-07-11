@@ -11,13 +11,22 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.service.github.collector;
+package com.unitvectory.serviceauditreport.service.github.model;
+
+import java.util.List;
+
+import lombok.Data;
 
 /**
- * The GitHubOrganization collector
+ * The GitHubConfig
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class GitHubOrganizationCollector {
+@Data
+public class GitHubConfig {
 
+    private String token;
+
+
+    private List<String> organization;
 }
