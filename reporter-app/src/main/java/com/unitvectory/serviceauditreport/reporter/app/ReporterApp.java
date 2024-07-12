@@ -16,6 +16,7 @@ package com.unitvectory.serviceauditreport.reporter.app;
 import org.pmw.tinylog.Logger;
 
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
+import com.unitvectory.serviceauditreport.serviceauditcore.Reporter;
 
 import lombok.AllArgsConstructor;
 
@@ -32,8 +33,14 @@ public class ReporterApp extends AbstractApp {
         return "reporter";
     }
 
+    @Override
+    protected Class<?> getServiceAnnotationClass() {
+        return Reporter.class;
+    }
+
     /**
      * The Reporter App main method
+     * 
      * @param args the arguments
      */
     public static void main(String[] args) {
@@ -41,4 +48,5 @@ public class ReporterApp extends AbstractApp {
         new ReporterApp().run(args);
         Logger.info("APPLICATION FINISHED");
     }
+
 }

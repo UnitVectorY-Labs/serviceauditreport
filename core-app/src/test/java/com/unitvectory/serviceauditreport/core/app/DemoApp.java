@@ -15,6 +15,8 @@ package com.unitvectory.serviceauditreport.core.app;
 
 import org.pmw.tinylog.Logger;
 
+import com.unitvectory.serviceauditreport.serviceauditcore.Collector;
+
 /**
  * The Demo App
  * 
@@ -25,6 +27,12 @@ public class DemoApp extends AbstractApp {
     @Override
     protected String getAppName() {
         return "demo";
+    }
+
+    @Override
+    protected Class<?> getServiceAnnotationClass() {
+        // Just assuming a Collector class for testing
+        return Collector.class;
     }
 
     /**

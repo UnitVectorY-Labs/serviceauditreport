@@ -14,7 +14,13 @@
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
+import io.github.classgraph.ClassGraph;
+import io.github.classgraph.ClassInfo;
+import io.github.classgraph.ClassInfoList;
+import io.github.classgraph.ScanResult;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -25,6 +31,44 @@ import lombok.experimental.UtilityClass;
  */
 @UtilityClass
 public class AnnotationUtils {
+
+    /**
+     * Retrieves all classes annotated with @Collector in the given package that
+     * extend the AbstractService class.
+     * 
+     * @param packageName the package to search for classes
+     * @param serviceType the class annotation to search for
+     * @return a list of classes annotated with @Collector
+     */
+    public static List<AbstractService<?, ?>> getAnnotatedServices(@NonNull String packageName,
+            @NonNull Class<?> serviceType) {
+        List<AbstractService<?, ?>> instances = new ArrayList<>();
+
+        try (ScanResult scanResult = new ClassGraph()
+                .enableAllInfo()
+                .acceptPackages(packageName)
+                .scan()) {
+
+            ClassInfoList classInfoList = scanResult.getClassesWithAnnotation(serviceType.getName())
+                    .filter(classInfo -> classInfo.extendsSuperclass(AbstractService.class.getName()));
+
+            for (ClassInfo classInfo : classInfoList) {
+                try {
+                    Class<?> clazz = classInfo.loadClass();
+                    if (AbstractService.class.isAssignableFrom(clazz)) {
+                        AbstractService<?, ?> instance = (AbstractService<?, ?>) clazz.getDeclaredConstructor()
+                                .newInstance();
+                        instances.add(instance);
+                    }
+                } catch (Exception e) {
+                    throw new ServiceAuditReportException("failed to create instance of class " + classInfo.getName(),
+                            e);
+                }
+            }
+        }
+
+        return instances;
+    }
 
     /**
      * Retrieves the value of the field annotated with @SetIdentifier from the given

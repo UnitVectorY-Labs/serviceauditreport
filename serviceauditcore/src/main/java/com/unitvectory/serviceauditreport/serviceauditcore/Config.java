@@ -11,24 +11,19 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.unitvectory.serviceauditreport.service.github.model;
-
-import java.util.List;
-
-import com.unitvectory.serviceauditreport.serviceauditcore.Config;
-
-import lombok.Data;
+package com.unitvectory.serviceauditreport.serviceauditcore;
 
 /**
- * The GitHubConfig
+ * The Config annotation
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@Data
-@Config(name = "github")
-public class GitHubConfig {
+public @interface Config {
 
-    private String token;
-
-    private List<String> organization;
+    /**
+     * The name used in the configuration
+     * 
+     * @return the name
+     */
+    String name();
 }

@@ -16,6 +16,7 @@ package com.unitvectory.serviceauditreport.analyzer.app;
 import org.pmw.tinylog.Logger;
 
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
+import com.unitvectory.serviceauditreport.serviceauditcore.Analyzer;
 
 import lombok.AllArgsConstructor;
 
@@ -32,6 +33,11 @@ public class AnalyzerApp extends AbstractApp {
         return "analyzer";
     }
 
+    @Override
+    protected Class<?> getServiceAnnotationClass() {
+        return Analyzer.class;
+    }
+
     /**
      * The Analyzer App main method
      * @param args the arguments
@@ -41,4 +47,5 @@ public class AnalyzerApp extends AbstractApp {
         new AnalyzerApp().run(args);
         Logger.info("APPLICATION FINISHED");
     }
+
 }

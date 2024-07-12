@@ -16,6 +16,7 @@ package com.unitvectory.serviceauditreport.collector.app;
 import org.pmw.tinylog.Logger;
 
 import com.unitvectory.serviceauditreport.core.app.AbstractApp;
+import com.unitvectory.serviceauditreport.serviceauditcore.Collector;
 
 /**
  * The Collector App
@@ -29,8 +30,14 @@ public class CollectorApp extends AbstractApp {
         return "collector";
     }
 
+    @Override
+    protected Class<?> getServiceAnnotationClass() {
+        return Collector.class;
+    }
+
     /**
      * The Collector App main method
+     * 
      * @param args the arguments
      */
     public static void main(String[] args) {
