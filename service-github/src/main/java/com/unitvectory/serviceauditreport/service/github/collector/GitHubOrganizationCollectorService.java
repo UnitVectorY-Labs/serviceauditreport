@@ -34,11 +34,16 @@ public class GitHubOrganizationCollectorService extends AbstractService<GitHubOr
 
         GitHubClient client = new GitHubClient(configuration.getToken());
 
-        ServiceOutput<GitHubOrganization> output = new ServiceOutput<>();
-        for (String org : configuration.getOrganization()) {
+        ServiceOutput<GitHubOrganization> output = new ServiceOutput<>(GitHubOrganization.class);
+        for (String org : configuration.getOrganizations()) {
             output.add(client.getOrganization(org));
         }
 
         return output;
+    }
+
+    @Override
+    public Class<GitHubConfig> getConfigurationClass() {
+        return GitHubConfig.class;
     }
 }

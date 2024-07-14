@@ -46,7 +46,7 @@ public class GitHubRepositorySummaryCollectorService extends AbstractService<Git
         List<GitHubOrganization> orgs = dataManager.load(GitHubOrganization.class);
 
         // The output
-        ServiceOutput<GitHubRepositorySummary> output = new ServiceOutput<>();
+        ServiceOutput<GitHubRepositorySummary> output = new ServiceOutput<>(GitHubRepositorySummary.class);
 
         // Get the organization
         for (GitHubOrganization org : orgs) {
@@ -72,4 +72,8 @@ public class GitHubRepositorySummaryCollectorService extends AbstractService<Git
         return output;
     }
 
+    @Override
+    public Class<GitHubConfig> getConfigurationClass() {
+        return GitHubConfig.class;
+    }
 }

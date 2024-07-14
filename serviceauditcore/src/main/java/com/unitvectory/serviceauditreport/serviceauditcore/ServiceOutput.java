@@ -25,6 +25,11 @@ import java.util.List;
 public class ServiceOutput<O> {
 
     /**
+     * The class of the output.
+     */
+    private Class<O> clazz;
+
+    /**
      * The output list.
      */
     private final List<O> output;
@@ -32,7 +37,8 @@ public class ServiceOutput<O> {
     /**
      * Creates a new service output.
      */
-    public ServiceOutput() {
+    public ServiceOutput(Class<O> clazz) {
+        this.clazz = clazz;
         this.output = new ArrayList<>();
     }
 
@@ -45,5 +51,13 @@ public class ServiceOutput<O> {
     public ServiceOutput<O> add(O item) {
         this.output.add(item);
         return this;
+    }
+
+    /**
+     * Saves the output.
+     * @param dataManager the data manager
+     */
+    public void save(DataManagerHierarchical dataManager) {
+        dataManager.save(clazz, output);
     }
 }

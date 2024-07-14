@@ -30,4 +30,10 @@ public abstract class AbstractService<O, C> {
      * @return the output of the service
      */
     public abstract ServiceOutput<O> execute(DataManagerRead dataManager, C configuration);
+
+    /**
+     * Get the configuration class for this service
+     * @return the configuration class
+     */
+    public abstract Class<C> getConfigurationClass();
 }

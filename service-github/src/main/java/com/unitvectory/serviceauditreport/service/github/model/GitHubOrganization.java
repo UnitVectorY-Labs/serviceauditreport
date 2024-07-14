@@ -35,7 +35,8 @@ import lombok.NoArgsConstructor;
 public class GitHubOrganization {
 
     @SetIdentifier
-    private long id;
+    private String id; // This is actually an integer in the GitHub API
+
     private String login;
     private String node_id;
     private String description;

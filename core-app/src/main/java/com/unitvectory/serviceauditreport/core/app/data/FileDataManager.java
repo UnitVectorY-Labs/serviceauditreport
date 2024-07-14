@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.pmw.tinylog.Logger;
+
 import com.unitvectory.serviceauditreport.serviceauditcore.DataManagerHierarchical;
 import com.unitvectory.serviceauditreport.serviceauditcore.JacksonObjectMapper;
 import com.unitvectory.serviceauditreport.serviceauditcore.AccessType;
@@ -148,6 +150,7 @@ public class FileDataManager implements DataManagerHierarchical {
 
     private <T> T readFile(Class<T> clazz, File file) {
         try {
+            Logger.info("Reading file: " + file.getAbsolutePath());
             return JacksonObjectMapper.OBJECT_MAPPER.readValue(file, clazz);
         } catch (IOException e) {
             throw new ServiceAuditReportException("Failed to read instance from file", e);
@@ -156,6 +159,7 @@ public class FileDataManager implements DataManagerHierarchical {
 
     private <T> void writeFile(Class<T> clazz, T instance, File file) {
         try {
+            Logger.info("Writing file: " + file.getAbsolutePath());
             JacksonObjectMapper.OBJECT_MAPPER.writeValue(file, instance);
         } catch (IOException e) {
             throw new ServiceAuditReportException("Failed to save instance to file", e);

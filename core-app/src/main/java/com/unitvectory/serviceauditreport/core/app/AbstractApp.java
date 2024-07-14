@@ -15,6 +15,10 @@ package com.unitvectory.serviceauditreport.core.app;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -26,7 +30,12 @@ import org.apache.commons.cli.ParseException;
 import org.pmw.tinylog.Logger;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.unitvectory.serviceauditreport.core.app.data.FileDataManager;
+import com.unitvectory.serviceauditreport.serviceauditcore.AbstractService;
+import com.unitvectory.serviceauditreport.serviceauditcore.AnnotationUtils;
+import com.unitvectory.serviceauditreport.serviceauditcore.DataManagerRead;
 import com.unitvectory.serviceauditreport.serviceauditcore.JacksonObjectMapper;
+import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
 
 /**
  * The Abstract App
@@ -63,7 +72,26 @@ public abstract class AbstractApp {
 
             String configPath = line.getOptionValue("config");
 
-            JsonNode rootNode = JacksonObjectMapper.OBJECT_MAPPER.readTree(new File(configPath));
+            // TODO: pass in path to store files as another parameter
+            File root = new File("data");
+
+            FileDataManager fileDataManager = new FileDataManager(root);
+
+            File file = new File(configPath);
+            if (!file.exists()) {
+                Logger.error("The configuration file does not exist: " + configPath);
+                return;
+            }
+
+            JsonNode rootNode = JacksonObjectMapper.OBJECT_MAPPER.readTree(file);
+
+            // Loop through all of the nodes getting the key and value as JsonNode
+            rootNode.fields().forEachRemaining(entry -> {
+                String key = entry.getKey();
+                JsonNode value = entry.getValue();
+
+                process(fileDataManager, key, value);
+            });
 
             // TODO: Everything
 
@@ -72,6 +100,45 @@ public abstract class AbstractApp {
         } catch (IOException e) {
             Logger.error("Failed to read the configuration file: " + e.getMessage());
         }
+    }
+
+    private void process(FileDataManager fileDataManager, String configPackage, JsonNode configJson) {
+
+        List<AbstractService<?, ?>> services = AnnotationUtils.getAnnotatedServices(configPackage,
+                getServiceAnnotationClass());
+
+        Map<Class<?>, Object> configurationMap = new HashMap<>();
+
+        // TODO: This needs to execute the services in the correct order evaluating the
+        // tree and passing in the correct parents. The current method of just looping
+        // through does not work correctly and none of the parent relationships are
+        // being handled at all.
+
+        for (AbstractService<?, ?> service : services) {
+
+            Class<?> configClass = service.getConfigurationClass();
+            Object config = configurationMap.get(configClass);
+            if (config == null) {
+                config = JacksonObjectMapper.OBJECT_MAPPER.convertValue(configJson, configClass);
+                configurationMap.put(configClass, config);
+            }
+
+            ServiceOutput<?> output = null;
+            try {
+                // This is tricky, we have an abstract class with generics that we want to be
+                // able to call a specific method for passing in the configuration
+                Method executeMethod = service.getClass().getMethod("execute", DataManagerRead.class,
+                        config.getClass());
+                output = (ServiceOutput<?>) executeMethod.invoke(service, fileDataManager, config);
+            } catch (Exception e) {
+                Logger.error("Failed to execute service: " + e.getMessage());
+                throw new RuntimeException(e);
+            }
+
+            // TODO: Fully handle the output
+            output.save(fileDataManager);
+        }
+
     }
 
     /**

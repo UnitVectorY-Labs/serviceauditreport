@@ -35,7 +35,8 @@ import com.unitvectory.serviceauditreport.serviceauditcore.SetIdentifier;
 public class GitHubRepositorySummary {
 
     @SetIdentifier
-    private int id;
+    private String id; // This is actually an integer in the GitHub API
+
     private String nodeId;
     private String name;
     private String fullName;

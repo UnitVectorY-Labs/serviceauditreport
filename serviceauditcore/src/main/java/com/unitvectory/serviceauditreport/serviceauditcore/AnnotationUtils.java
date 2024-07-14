@@ -33,6 +33,38 @@ import lombok.experimental.UtilityClass;
 public class AnnotationUtils {
 
     /**
+     * Retrieves the configuration class from the given package.
+     * 
+     * @param packageName the package to search for the configuration class
+     * @return the configuration class
+     */
+    public static Class<?> getConfigurationClass(@NonNull String packageName) {
+        try (ScanResult scanResult = new ClassGraph()
+                .enableAllInfo()
+                .acceptPackages(packageName)
+                .scan()) {
+
+            ClassInfoList classInfoList = scanResult.getClassesWithAnnotation(Config.class.getName());
+
+            if (classInfoList.size() == 0) {
+                throw new ServiceAuditReportException(
+                        "No classes annotated with @Config found in package " + packageName);
+            }
+
+            if (classInfoList.size() > 1) {
+                throw new ServiceAuditReportException(
+                        "Multiple classes annotated with @Config found in package " + packageName);
+            }
+
+            ClassInfo classInfo = classInfoList.get(0);
+
+            // TODO: Verify the @Config name parameter matches the packageName
+
+            return classInfo.loadClass();
+        }
+    }
+
+    /**
      * Retrieves all classes annotated with @Collector in the given package that
      * extend the AbstractService class.
      * 
@@ -87,14 +119,16 @@ public class AnnotationUtils {
                     // Make the field accessible
                     field.setAccessible(true);
 
-                    // Make sure the field is a string
-                    if (!String.class.equals(field.getType())) {
+                    // Make sure the field is an allowed type
+                    if (String.class.equals(field.getType())) {
+                        // String is allowed
+                        return (String) field.get(instance);
+                    } else {
                         throw new ServiceAuditReportException(
-                                "Field " + field.getName() + " is not a string, but is annotated with @SetIdentifier");
+                                "Field " + field.getName()
+                                        + " is not a string, but is annotated with @SetIdentifier; is type + "
+                                        + field.getType().getName());
                     }
-
-                    // Return the value of the field
-                    return (String) field.get(instance);
                 }
             }
 
