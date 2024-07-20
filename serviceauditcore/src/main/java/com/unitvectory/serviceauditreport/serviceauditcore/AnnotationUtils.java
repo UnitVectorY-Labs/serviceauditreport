@@ -33,38 +33,6 @@ import lombok.experimental.UtilityClass;
 public class AnnotationUtils {
 
     /**
-     * Retrieves the configuration class from the given package.
-     * 
-     * @param packageName the package to search for the configuration class
-     * @return the configuration class
-     */
-    public static Class<?> getConfigurationClass(@NonNull String packageName) {
-        try (ScanResult scanResult = new ClassGraph()
-                .enableAllInfo()
-                .acceptPackages(packageName)
-                .scan()) {
-
-            ClassInfoList classInfoList = scanResult.getClassesWithAnnotation(Config.class.getName());
-
-            if (classInfoList.size() == 0) {
-                throw new ServiceAuditReportException(
-                        "No classes annotated with @Config found in package " + packageName);
-            }
-
-            if (classInfoList.size() > 1) {
-                throw new ServiceAuditReportException(
-                        "Multiple classes annotated with @Config found in package " + packageName);
-            }
-
-            ClassInfo classInfo = classInfoList.get(0);
-
-            // TODO: Verify the @Config name parameter matches the packageName
-
-            return classInfo.loadClass();
-        }
-    }
-
-    /**
      * Retrieves all classes annotated with @Collector in the given package that
      * extend the AbstractService class.
      * 
@@ -151,5 +119,41 @@ public class AnnotationUtils {
         }
 
         throw new ServiceAuditReportException("Class " + clazz.getName() + " does not have the DataEntity annotation");
+    }
+
+    /**
+     * Retrieves the Config annotation for the given class.
+     * 
+     * @param clazz the class to get the annotation from
+     * @return the Config annotation; ServiceAuditReportException thrown if not
+     *         present
+     */
+    public static String getConfigName(@NonNull Class<?> clazz) {
+        if (clazz.isAnnotationPresent(Config.class)) {
+            String name = clazz.getAnnotation(Config.class).name();
+            if (name == null) {
+                throw new ServiceAuditReportException(
+                        "Class " + clazz.getName() + " does not have the Config annotation 'name' value");
+            }
+
+            return name;
+        }
+
+        throw new ServiceAuditReportException("Class " + clazz.getName() + " does not have the Config annotation");
+    }
+
+    /**
+     * Retrieves the ServiceInput annotation for the given class.
+     * 
+     * @param clazz the class to get the annotation from
+     * @return the ServiceInput annotation, or null if not present
+     */
+    public static ServiceInput getServiceInput(@NonNull Class<?> clazz) {
+        if (clazz.isAnnotationPresent(ServiceInput.class)) {
+            return clazz.getAnnotation(ServiceInput.class);
+            
+        }
+
+        throw new ServiceAuditReportException("Class " + clazz.getName() + " does not have the ServiceInput annotation");
     }
 }

@@ -58,14 +58,4 @@ public class DataManagerHierarchicalDecorator implements DataManagerHierarchical
     public <T> void save(Class<T> clazz, T instance, ParentIdentifier parentIdentifier) {
         this.dataManager.save(clazz, instance, this.parentIdentifier);
     }
-
-    @Override
-    public <T> void save(Class<T> clazz, List<T> instances) {
-        this.dataManager.save(clazz, instances, this.parentIdentifier);
-    }
-
-    @Override
-    public <T> void save(Class<T> clazz, List<T> instances, ParentIdentifier parentIdentifier) {
-        this.dataManager.save(clazz, instances, this.parentIdentifier);
-    }
 }

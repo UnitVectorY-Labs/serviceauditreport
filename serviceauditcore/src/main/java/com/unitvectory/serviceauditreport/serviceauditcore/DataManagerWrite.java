@@ -32,11 +32,15 @@ public interface DataManagerWrite {
     <T> void save(Class<T> clazz, T instance);
 
     /**
-     * Saves the instances of the class.
+     * Saves the list of instances of the class.
      * 
      * @param <T>       the class type
      * @param clazz     the class type
-     * @param instances the instances of the class
+     * @param instances the list of instances of the class
      */
-    <T> void save(Class<T> clazz, List<T> instances);
+    default <T> void saveList(Class<T> clazz, List<T> instances) {
+        for (T instance : instances) {
+            save(clazz, instance);
+        }
+    }
 }

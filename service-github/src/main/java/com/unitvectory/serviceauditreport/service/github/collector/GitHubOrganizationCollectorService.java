@@ -19,6 +19,7 @@ import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganizatio
 import com.unitvectory.serviceauditreport.serviceauditcore.AbstractService;
 import com.unitvectory.serviceauditreport.serviceauditcore.Collector;
 import com.unitvectory.serviceauditreport.serviceauditcore.DataManagerRead;
+import com.unitvectory.serviceauditreport.serviceauditcore.ServiceInput;
 import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
 
 /**
@@ -27,6 +28,7 @@ import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Collector
+@ServiceInput(parent = Void.class)
 public class GitHubOrganizationCollectorService extends AbstractService<GitHubOrganization, GitHubConfig> {
 
     @Override
@@ -40,6 +42,11 @@ public class GitHubOrganizationCollectorService extends AbstractService<GitHubOr
         }
 
         return output;
+    }
+
+    @Override
+    public Class<GitHubOrganization> getOutputClass() {
+        return GitHubOrganization.class;
     }
 
     @Override

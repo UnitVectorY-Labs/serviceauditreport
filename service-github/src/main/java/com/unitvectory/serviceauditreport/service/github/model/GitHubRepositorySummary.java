@@ -28,7 +28,7 @@ import com.unitvectory.serviceauditreport.serviceauditcore.SetIdentifier;
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-@DataEntity(accessType = AccessType.SINGULAR, parent = GitHubOrganization.class)
+@DataEntity(accessType = AccessType.SET, parent = GitHubOrganization.class)
 @Data
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)

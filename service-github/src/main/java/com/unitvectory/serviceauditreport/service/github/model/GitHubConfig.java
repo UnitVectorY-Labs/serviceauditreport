@@ -25,7 +25,7 @@ import lombok.Data;
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Data
-@Config(name = "com.unitvectory.serviceauditreport.service.github")
+@Config(name = "github")
 public class GitHubConfig {
 
     private String token;

@@ -43,6 +43,17 @@ public class FileDataManager implements DataManagerHierarchical {
 
     @Override
     public <T> List<T> load(@NonNull Class<T> clazz, ParentIdentifier parentIdentifier) {
+
+        // TODO: Verify this logic, this will work for parents going up, but not for
+        // other relatives
+        // This load needs to be totally overhauled so that it can identify the
+        // relationship so that it can load the correct data as it relates to the parent
+
+        // After further thought I think I have the correct algorithm for evaluating this properly.
+        if (parentIdentifier != null && clazz == parentIdentifier.getType()) {
+            return load(clazz, parentIdentifier.getAncestor());
+        }
+
         DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
 
         File folder = this.getFolder(rootFolder, parentIdentifier, true);
@@ -111,43 +122,14 @@ public class FileDataManager implements DataManagerHierarchical {
         }
     }
 
-    @Override
-    public <T> void save(@NonNull Class<T> clazz, @NonNull List<T> instances, ParentIdentifier parentIdentifier) {
-        DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
-
-        File folder = this.getFolder(rootFolder, parentIdentifier, true);
-
-        String name = clazz.getName();
-
-        if (AccessType.SINGULAR.equals(dataEntity.accessType())) {
-
-            // Singular file
-            File file = new File(folder, name + ".json");
-
-            // Save the file
-            for (T instance : instances) {
-                this.writeFile(clazz, instance, file);
-            }
-
-        } else if (AccessType.SET.equals(dataEntity.accessType())) {
-
-            // Set folder
-            File setFolder = new File(folder, name);
-            setFolder.mkdirs();
-
-            for (T instance : instances) {
-                String id = AnnotationUtils.getSetIdentifierValue(instance);
-
-                File file = new File(setFolder, id + ".json");
-
-                // Save the file
-                this.writeFile(clazz, instance, file);
-            }
-        } else {
-            throw new ServiceAuditReportException("Unknown access type: " + dataEntity.accessType());
-        }
-    }
-
+    /**
+     * Read a file
+     * 
+     * @param <T>   the class type
+     * @param clazz the class
+     * @param file  the file
+     * @return the instance
+     */
     private <T> T readFile(Class<T> clazz, File file) {
         try {
             Logger.info("Reading file: " + file.getAbsolutePath());
@@ -157,6 +139,14 @@ public class FileDataManager implements DataManagerHierarchical {
         }
     }
 
+    /**
+     * Write a file
+     * 
+     * @param <T>      the class type
+     * @param clazz    the class
+     * @param instance the instance
+     * @param file     the file
+     */
     private <T> void writeFile(Class<T> clazz, T instance, File file) {
         try {
             Logger.info("Writing file: " + file.getAbsolutePath());
@@ -166,6 +156,14 @@ public class FileDataManager implements DataManagerHierarchical {
         }
     }
 
+    /**
+     * Get the folder
+     * 
+     * @param folder           the folder
+     * @param parentIdentifier the parent identifier
+     * @param root             if this is the root
+     * @return the folder
+     */
     private File getFolder(File folder, ParentIdentifier parentIdentifier, boolean root) {
 
         // No parent, return the folder

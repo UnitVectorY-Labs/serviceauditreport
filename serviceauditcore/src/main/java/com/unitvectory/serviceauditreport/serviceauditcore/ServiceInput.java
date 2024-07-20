@@ -29,9 +29,16 @@ import java.lang.annotation.Target;
 public @interface ServiceInput {
 
     /**
-     * The input classes of the service.
+     * The parent class of the service.
      * 
-     * @return the input classes of the service
+     * @return the parent class of the service
      */
-    Class<?>[] value();
+    Class<?> parent();
+
+    /**
+     * The relatives classes of the service. These are classes that are related to
+     * the class. The dependencies between classes and their relatives must form an
+     * acyclic graph.
+     */
+    Class<?>[] relatives() default {};
 }

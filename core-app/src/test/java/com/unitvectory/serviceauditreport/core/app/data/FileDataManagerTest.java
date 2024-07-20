@@ -92,7 +92,7 @@ public class FileDataManagerTest {
 
         // Write the first set
         List<DemoSetEntry> set = List.of(new DemoSetEntry("1", "a", "b"));
-        fileDataManager.save(DemoSetEntry.class, set);
+        fileDataManager.saveList(DemoSetEntry.class, set);
         ParentIdentifier parent = ParentIdentifier.of(set.get(0));
 
         // Write the object
@@ -121,7 +121,7 @@ public class FileDataManagerTest {
 
         // Write the first set
         List<DemoSetEntry> set = List.of(new DemoSetEntry("1", "a", "b"));
-        fileDataManager.save(DemoSetEntry.class, set);
+        fileDataManager.saveList(DemoSetEntry.class, set);
         ParentIdentifier parent = ParentIdentifier.of(set.get(0));
 
         // Write the object
@@ -150,7 +150,7 @@ public class FileDataManagerTest {
 
         // Write the first set
         List<DemoSingularEntry> set = List.of(new DemoSingularEntry("x", "y"));
-        fileDataManager.save(DemoSingularEntry.class, set);
+        fileDataManager.saveList(DemoSingularEntry.class, set);
         ParentIdentifier parent = ParentIdentifier.of(set.get(0));
 
         // Write the object
@@ -179,7 +179,7 @@ public class FileDataManagerTest {
 
         // Write the first set
         List<DemoSingularEntry> set = List.of(new DemoSingularEntry("x", "y"));
-        fileDataManager.save(DemoSingularEntry.class, set);
+        fileDataManager.saveList(DemoSingularEntry.class, set);
         ParentIdentifier parent = ParentIdentifier.of(set.get(0));
 
         // Write the object
@@ -198,7 +198,7 @@ public class FileDataManagerTest {
         verifyFile(write, tempDir, "com.unitvectory.serviceauditreport.core.app.data.DemoSingularEntry",
                 "com.unitvectory.serviceauditreport.core.app.data.DemoSingularSingularEntry.json");
     }
-
+    
     /**
      * Helper method to verify the file contents are equal to the object
      * 

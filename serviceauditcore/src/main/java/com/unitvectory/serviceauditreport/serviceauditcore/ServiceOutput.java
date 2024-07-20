@@ -16,6 +16,8 @@ package com.unitvectory.serviceauditreport.serviceauditcore;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * The service output class.
  * 
@@ -32,6 +34,7 @@ public class ServiceOutput<O> {
     /**
      * The output list.
      */
+    @Getter
     private final List<O> output;
 
     /**
@@ -55,9 +58,12 @@ public class ServiceOutput<O> {
 
     /**
      * Saves the output.
+     * 
      * @param dataManager the data manager
      */
     public void save(DataManagerHierarchical dataManager) {
-        dataManager.save(clazz, output);
+        for (O obj : output) {
+            dataManager.save(clazz, obj);
+        }
     }
 }

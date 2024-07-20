@@ -63,26 +63,4 @@ public interface DataManagerHierarchical extends DataManager {
      * @param parentIdentifier the parent identifier for where to save the instance
      */
     <T> void save(Class<T> clazz, T instance, ParentIdentifier parentIdentifier);
-
-    /**
-     * Saves the instances of the class.
-     * 
-     * @param <T>       the class type
-     * @param clazz     the class type
-     * @param instances the instances of the class
-     */
-    default <T> void save(Class<T> clazz, List<T> instances) {
-        save(clazz, instances, null);
-    }
-
-    /**
-     * Saves the instances of the class.
-     * 
-     * @param <T>              the class type
-     * @param clazz            the class type
-     * @param instances        the instances of the class
-     * @param parentIdentifier the parent identifier for where to save the instances
-     */
-    <T> void save(Class<T> clazz, List<T> instances, ParentIdentifier parentIdentifier);
-
 }

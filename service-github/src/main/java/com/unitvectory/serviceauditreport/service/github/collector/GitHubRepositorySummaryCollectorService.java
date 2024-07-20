@@ -31,7 +31,7 @@ import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Collector
-@ServiceInput(GitHubOrganization.class)
+@ServiceInput(parent = GitHubOrganization.class)
 public class GitHubRepositorySummaryCollectorService extends AbstractService<GitHubRepositorySummary, GitHubConfig> {
 
     private static final int PERPAGE = 1;
@@ -70,6 +70,12 @@ public class GitHubRepositorySummaryCollectorService extends AbstractService<Git
         }
 
         return output;
+    }
+
+
+    @Override
+    public Class<GitHubRepositorySummary> getOutputClass() {
+        return GitHubRepositorySummary.class;
     }
 
     @Override
