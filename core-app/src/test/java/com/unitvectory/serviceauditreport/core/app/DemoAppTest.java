@@ -13,7 +13,11 @@
  */
 package com.unitvectory.serviceauditreport.core.app;
 
+import java.nio.file.Path;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.CleanupMode;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * The Demo App Test
@@ -23,8 +27,20 @@ import org.junit.jupiter.api.Test;
 public class DemoAppTest {
 
     @Test
-    public void demoAppTest() {
+    public void demoAppNoArgsTest() {
         // Test the main method which will error as missing parameters
         DemoApp.main(new String[] {});
+    }
+
+    @Test
+    public void demoAppTestArgs(@TempDir(cleanup = CleanupMode.ON_SUCCESS) Path tempDir) {
+        // Convert tempDir to absolute path string
+        String tempPath = tempDir.toAbsolutePath().toString();
+
+        // Build the absolute path to the file test-configs.json in the test resources
+        String inputPath = getClass().getClassLoader().getResource("test-config.json").getPath();
+
+        // Test the main method with arguments
+        DemoApp.main(new String[] { "-i", inputPath, "-o", tempPath });
     }
 }

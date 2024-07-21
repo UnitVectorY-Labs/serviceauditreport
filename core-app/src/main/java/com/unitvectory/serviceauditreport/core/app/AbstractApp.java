@@ -65,13 +65,8 @@ public abstract class AbstractApp {
         try {
             CommandLine line = parser.parse(options, args);
 
+            // Get the configuration file
             String configPath = line.getOptionValue("config");
-
-            // TODO: pass in path to store files as another parameter
-            File root = new File("data");
-
-            FileDataManager fileDataManager = new FileDataManager(root);
-
             File file = new File(configPath);
             if (!file.exists()) {
                 Logger.error("The configuration file does not exist: " + configPath);
@@ -79,6 +74,16 @@ public abstract class AbstractApp {
             }
 
             JsonNode rootConfigNode = JacksonObjectMapper.OBJECT_MAPPER.readTree(file);
+
+            // Get the output Directory
+            String outputPath = line.getOptionValue("output");
+            File outputDirectory = new File(outputPath);
+            if (!outputDirectory.exists()) {
+                Logger.error("The output directory does not exist: " + outputPath);
+                return;
+            }
+
+            FileDataManager fileDataManager = new FileDataManager(outputDirectory);
 
             // TODO: pass in the root package as another parameter
             final String rootPackage = "com.unitvectory.serviceauditreport";
@@ -106,6 +111,7 @@ public abstract class AbstractApp {
     private Options createOptions() {
         Options options = new Options();
 
+        // The path to the configuration JSON file
         Option configOption = Option.builder("c")
                 .longOpt("config")
                 .argName("config")
@@ -114,7 +120,17 @@ public abstract class AbstractApp {
                 .required(true)
                 .build();
 
+        // The path to the output directory
+        Option outputOption = Option.builder("o")
+                .longOpt("output")
+                .argName("output")
+                .desc("the output directory")
+                .hasArg()
+                .required(true)
+                .build();
+
         options.addOption(configOption);
+        options.addOption(outputOption);
         return options;
     }
 
