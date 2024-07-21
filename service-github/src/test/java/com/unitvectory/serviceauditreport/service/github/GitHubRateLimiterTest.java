@@ -13,11 +13,17 @@
  */
 package com.unitvectory.serviceauditreport.service.github;
 
+import org.junit.jupiter.api.Test;
+
 /**
- * The GitHub
+ * The GitHubTest
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
-public class GitHub {
+public class GitHubRateLimiterTest {
 
+    @Test
+    public void test() {
+        GitHubRateLimiter.consumeOne();
+    }
 }

@@ -21,6 +21,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.io.HttpClientResponseHandler;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 
+import com.unitvectory.serviceauditreport.service.github.GitHubRateLimiter;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositorySummary;
 import com.unitvectory.serviceauditreport.serviceauditcore.JacksonObjectMapper;
@@ -68,6 +69,9 @@ public class GitHubClient {
                 return JacksonObjectMapper.OBJECT_MAPPER.readValue(jsonResponse, responseType);
             };
 
+            // Using the global rate limiter for GitHub, not ideal
+            GitHubRateLimiter.consumeOne();
+
             return httpClient.execute(request, responseHandler);
         } catch (Exception e) {
             throw new RuntimeException("get request failed", e);
@@ -90,6 +94,9 @@ public class GitHubClient {
                                 responseType));
             };
 
+            // Using the global rate limiter for GitHub, not ideal
+            GitHubRateLimiter.consumeOne();
+            
             return httpClient.execute(request, responseHandler);
         } catch (Exception e) {
             throw new RuntimeException("get request failed", e);

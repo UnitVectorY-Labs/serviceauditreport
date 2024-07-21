@@ -34,7 +34,7 @@ import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
 @ServiceInput(parent = GitHubOrganization.class)
 public class GitHubRepositorySummaryCollectorService extends AbstractService<GitHubRepositorySummary, GitHubConfig> {
 
-    private static final int PERPAGE = 1;
+    private static final int PERPAGE = 50;
 
     @Override
     public ServiceOutput<GitHubRepositorySummary> execute(DataManagerRead dataManager, GitHubConfig configuration) {

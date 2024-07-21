@@ -14,6 +14,7 @@
 package com.unitvectory.serviceauditreport.serviceauditcore;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  * The JacksonObjectMapper class.
@@ -22,5 +23,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class JacksonObjectMapper {
 
-    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    public static final ObjectMapper OBJECT_MAPPER;
+
+    static {
+        OBJECT_MAPPER = new ObjectMapper();
+        
+        // Enable pretty printing
+        OBJECT_MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
+    }
 }
