@@ -17,7 +17,7 @@ import java.util.List;
 
 import com.unitvectory.serviceauditreport.service.github.client.GitHubClient;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubConfig;
-import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
+import com.unitvectory.serviceauditreport.service.github.model.GitHubPullRequest;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositorySummary;
 import com.unitvectory.serviceauditreport.serviceauditcore.AbstractService;
 import com.unitvectory.serviceauditreport.serviceauditcore.Collector;
@@ -26,45 +26,45 @@ import com.unitvectory.serviceauditreport.serviceauditcore.ServiceInput;
 import com.unitvectory.serviceauditreport.serviceauditcore.ServiceOutput;
 
 /**
- * The GitHubRepositorySummaryCollectorService
+ * The GitHubPullCollectorService
  * 
  * @author Jared Hatfield (UnitVectorY Labs)
  */
 @Collector
-@ServiceInput(parent = GitHubOrganization.class)
-public class GitHubRepositorySummaryCollectorService extends AbstractService<GitHubRepositorySummary, GitHubConfig> {
+@ServiceInput(parent = GitHubRepositorySummary.class)
+public class GitHubPullCollectorService extends AbstractService<GitHubPullRequest, GitHubConfig> {
 
-    private static final int PERPAGE = 50;
+    private static final int PERPAGE = 100;
 
     @Override
-    public ServiceOutput<GitHubRepositorySummary> execute(DataManagerRead dataManager, GitHubConfig configuration) {
-
+    public ServiceOutput<GitHubPullRequest> execute(DataManagerRead dataManager, GitHubConfig configuration) {
         GitHubClient client = new GitHubClient(configuration.getToken());
 
-        // Load the organizations that we are looking up for (in practice this will only
-        // be 1 item)
-        List<GitHubOrganization> orgs = dataManager.load(GitHubOrganization.class);
+        // Load the repositories that need to be looked up
+        List<GitHubRepositorySummary> repos = dataManager.load(GitHubRepositorySummary.class);
 
         // The output
-        ServiceOutput<GitHubRepositorySummary> output = new ServiceOutput<>(GitHubRepositorySummary.class);
+        ServiceOutput<GitHubPullRequest> output = new ServiceOutput<>(GitHubPullRequest.class);
 
         // Get the organization
-        for (GitHubOrganization org : orgs) {
+        for (GitHubRepositorySummary repo : repos) {
 
-            String organization = org.getLogin();
+            String organization = repo.getOwner().getLogin();
+            String repository = repo.getName();
+
             int page = 1;
             int size = 1; // Start out assming we got a page of data
             while (size > 0) {
                 // Read a page of repositories from the API
-                List<GitHubRepositorySummary> repositories = client.getRepositories(organization, PERPAGE, page);
+                List<GitHubPullRequest> pulls = client.getPullRequests(organization, repository, PERPAGE, page);
 
                 // Add the repositories to the output
-                for (GitHubRepositorySummary repository : repositories) {
-                    output.add(repository);
+                for (GitHubPullRequest pull : pulls) {
+                    output.add(pull);
                 }
 
                 // If we have more than 0 items, then we need to read the next page
-                size = repositories.size();
+                size = pulls.size();
                 page++;
             }
         }
@@ -73,12 +73,13 @@ public class GitHubRepositorySummaryCollectorService extends AbstractService<Git
     }
 
     @Override
-    public Class<GitHubRepositorySummary> getOutputClass() {
-        return GitHubRepositorySummary.class;
+    public Class<GitHubPullRequest> getOutputClass() {
+        return GitHubPullRequest.class;
     }
 
     @Override
     public Class<GitHubConfig> getConfigurationClass() {
         return GitHubConfig.class;
     }
+
 }

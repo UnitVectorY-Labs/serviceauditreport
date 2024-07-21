@@ -108,21 +108,30 @@ public class FileDataManager implements DataManagerHierarchical {
 
                         // Set folder
                         File setFolder = new File(folder, name);
-                        setFolder.mkdirs();
 
-                        // Loop through all of the files in the folder
-                        for (File file : setFolder.listFiles()) {
-                            // We only want files
-                            if (!file.isFile()) {
-                                continue;
-                            }
+                        ParentIdentifier fileParentIdentifier = parentIdentifierMap.get(traverseClass);
 
-                            // Skip the non-JSON files
-                            if (!file.getName().endsWith(".json")) {
-                                continue;
-                            }
-                            
+                        if (fileParentIdentifier != null && fileParentIdentifier.getId() != null) {
+                            // This is limited to a single file
+                            File file = new File(setFolder, fileParentIdentifier.getId() + ".json");
                             instances.add(this.readFile(loadClass, file));
+
+                        } else {
+
+                            // Loop through all of the files in the folder
+                            for (File file : setFolder.listFiles()) {
+                                // We only want files
+                                if (!file.isFile()) {
+                                    continue;
+                                }
+
+                                // Skip the non-JSON files
+                                if (!file.getName().endsWith(".json")) {
+                                    continue;
+                                }
+
+                                instances.add(this.readFile(loadClass, file));
+                            }
                         }
 
                     } else {

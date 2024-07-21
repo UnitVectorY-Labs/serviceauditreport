@@ -37,51 +37,51 @@ public class GitHubRepositorySummary {
     @SetIdentifier
     private String id; // This is actually an integer in the GitHub API
 
-    private String nodeId;
+    private String node_id;
     private String name;
-    private String fullName;
+    private String full_name;
     private Owner owner;
-    private boolean isPrivate;
+    private boolean is_private;
     private String description;
     private boolean fork;
-    private String gitUrl;
-    private String sshUrl;
-    private String cloneUrl;
-    private String mirrorUrl;
-    private String svnUrl;
+    private String git_url;
+    private String ssh_url;
+    private String clone_url;
+    private String mirror_url;
+    private String svn_url;
     private String homepage;
     private String language;
-    private int forksCount;
-    private int stargazersCount;
-    private int watchersCount;
+    private int forks_count;
+    private int stargazers_count;
+    private int watchers_count;
     private int size;
-    private String defaultBranch;
-    private int openIssuesCount;
-    private boolean isTemplate;
+    private String default_branch;
+    private int open_issues_count;
+    private boolean is_template;
     private List<String> topics;
-    private boolean hasIssues;
-    private boolean hasProjects;
-    private boolean hasWiki;
-    private boolean hasPages;
-    private boolean hasDownloads;
-    private boolean hasDiscussions;
+    private boolean has_issues;
+    private boolean has_projects;
+    private boolean has_wiki;
+    private boolean has_pages;
+    private boolean has_downloads;
+    private boolean has_discussions;
     private boolean archived;
     private boolean disabled;
     private String visibility;
-    private String pushedAt;
-    private String createdAt;
-    private String updatedAt;
+    private String pushed_at;
+    private String created_at;
+    private String updated_at;
     private Permissions permissions;
-    private String roleName;
-    private String tempCloneToken;
-    private boolean deleteBranchOnMerge;
-    private int subscribersCount;
-    private int networkCount;
-    private CodeOfConduct codeOfConduct;
+    private String role_name;
+    private String temp_clone_token;
+    private boolean delete_branch_on_merge;
+    private int subscribers_count;
+    private int network_count;
+    private CodeOfConduct code_of_conduct;
     private License license;
-    private boolean allowForking;
-    private boolean webCommitSignoffRequired;
-    private SecurityAndAnalysis securityAndAnalysis;
+    private boolean allow_forking;
+    private boolean web_commit_signoff_required;
+    private SecurityAndAnalysis security_and_analysis;
 
     @Data
     @NoArgsConstructor
@@ -91,12 +91,12 @@ public class GitHubRepositorySummary {
         private String email;
         private String login;
         private int id;
-        private String nodeId;
-        private String avatarUrl;
-        private String gravatarId;
+        private String node_id;
+        private String avatar_url;
+        private String gravatar_id;
         private String type;
-        private boolean siteAdmin;
-        private String starredAt;
+        private boolean site_admin;
+        private String starred_at;
     }
 
     @Data
@@ -125,18 +125,18 @@ public class GitHubRepositorySummary {
     public static class License {
         private String key;
         private String name;
-        private String spdxId;
-        private String nodeId;
+        private String spdx_id;
+        private String node_id;
     }
 
     @Data
     @NoArgsConstructor
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class SecurityAndAnalysis {
-        private AdvancedSecurity advancedSecurity;
-        private DependabotSecurityUpdates dependabotSecurityUpdates;
-        private SecretScanning secretScanning;
-        private SecretScanningPushProtection secretScanningPushProtection;
+        private AdvancedSecurity advanced_security;
+        private DependabotSecurityUpdates dependabot_security_updates;
+        private SecretScanning secret_scanning;
+        private SecretScanningPushProtection secret_scanning_push_protection;
 
         @Data
         @NoArgsConstructor

@@ -23,6 +23,7 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 
 import com.unitvectory.serviceauditreport.service.github.GitHubRateLimiter;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubOrganization;
+import com.unitvectory.serviceauditreport.service.github.model.GitHubPullRequest;
 import com.unitvectory.serviceauditreport.service.github.model.GitHubRepositorySummary;
 import com.unitvectory.serviceauditreport.serviceauditcore.JacksonObjectMapper;
 
@@ -53,6 +54,13 @@ public class GitHubClient {
     public List<GitHubRepositorySummary> getRepositories(String organization, int perPage, int page) {
         String url = String.format(REPOURL, organization, perPage, page);
         return getList(GitHubRepositorySummary.class, url);
+    }
+
+    private static final String PULLSURL = "https://api.github.com/repos/%s/%s/pulls?per_page=%d&page=%d";
+
+    public List<GitHubPullRequest> getPullRequests(String organization, String repository, int perPage, int page) {
+        String url = String.format(PULLSURL, organization, repository, perPage, page);
+        return getList(GitHubPullRequest.class, url);
     }
 
     private <T> T get(Class<T> responseType, String url) {
