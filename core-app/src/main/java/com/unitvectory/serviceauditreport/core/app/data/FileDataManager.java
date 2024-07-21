@@ -16,7 +16,10 @@ package com.unitvectory.serviceauditreport.core.app.data;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.pmw.tinylog.Logger;
 
@@ -41,51 +44,171 @@ public class FileDataManager implements DataManagerHierarchical {
 
     private final File rootFolder;
 
-    @Override
-    public <T> List<T> load(@NonNull Class<T> clazz, ParentIdentifier parentIdentifier) {
+    private Map<Class<?>, DataEntity> getClassTypeMap(Class<?> clazz) {
+        Map<Class<?>, DataEntity> types = new LinkedHashMap<>();
+        do {
+            DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
+            types.put(clazz, dataEntity);
 
-        // TODO: Verify this logic, this will work for parents going up, but not for
-        // other relatives
-        // This load needs to be totally overhauled so that it can identify the
-        // relationship so that it can load the correct data as it relates to the parent
+            clazz = dataEntity.parent();
+        } while (clazz != Void.class);
+        return types;
+    }
 
-        // After further thought I think I have the correct algorithm for evaluating this properly.
-        if (parentIdentifier != null && clazz == parentIdentifier.getType()) {
-            return load(clazz, parentIdentifier.getAncestor());
+    private Map<Class<?>, ParentIdentifier> getParentIdentifierMap(ParentIdentifier parentIdentifier) {
+        Map<Class<?>, ParentIdentifier> types = new LinkedHashMap<>();
+        while (parentIdentifier != null) {
+            types.put(parentIdentifier.getType(), parentIdentifier);
+            parentIdentifier = parentIdentifier.getAncestor();
         }
+        return types;
+    }
 
-        DataEntity dataEntity = AnnotationUtils.getDataEntityAnnotation(clazz);
+    public <T> List<T> load(@NonNull Class<T> loadClass, ParentIdentifier parentIdentifier) {
 
-        File folder = this.getFolder(rootFolder, parentIdentifier, true);
+        // The first step is to deteremine the tree structure that is relevant to this
+        Map<Class<?>, DataEntity> dataEntityMap = this.getClassTypeMap(loadClass);
 
-        String name = clazz.getName();
+        // The second step is to determine the parent identifiers that are relevant to
+        // this
+        Map<Class<?>, ParentIdentifier> parentIdentifierMap = this.getParentIdentifierMap(parentIdentifier);
+
+        // Get the list of classes in the order from root to leafe that we are going to
+        // walk though
+        List<Class<?>> classes = new ArrayList<>(dataEntityMap.keySet());
+        Collections.reverse(classes);
+
+        // Start at the root, we are going to
+        List<File> folders = new ArrayList<>();
+        folders.add(rootFolder);
 
         List<T> instances = new ArrayList<>();
 
-        if (AccessType.SINGULAR.equals(dataEntity.accessType())) {
+        // Walk through the tree
+        for (Class<?> traverseClass : classes) {
 
-            // Singular file
-            File file = new File(folder, name + ".json");
+            // Special case for the load class
+            if (loadClass == traverseClass) {
+                // We've reached the end so we can finally load the data
 
-            // Read the file
-            instances.add(this.readFile(clazz, file));
+                for (File folder : folders) {
 
-        } else if (AccessType.SET.equals(dataEntity.accessType())) {
+                    DataEntity dataEntity = dataEntityMap.get(traverseClass);
+                    String name = traverseClass.getName();
 
-            // Set folder
-            File setFolder = new File(folder, name);
-            setFolder.mkdirs();
+                    if (AccessType.SINGULAR.equals(dataEntity.accessType())) {
 
-            // Loop through all of the files in the folder
-            for (File file : setFolder.listFiles()) {
-                instances.add(this.readFile(clazz, file));
+                        // Singular file
+                        File file = new File(folder, name + ".json");
+
+                        // Read the file
+                        instances.add(this.readFile(loadClass, file));
+
+                    } else if (AccessType.SET.equals(dataEntity.accessType())) {
+
+                        // Set folder
+                        File setFolder = new File(folder, name);
+                        setFolder.mkdirs();
+
+                        // Loop through all of the files in the folder
+                        for (File file : setFolder.listFiles()) {
+                            // We only want files
+                            if (!file.isFile()) {
+                                continue;
+                            }
+
+                            // Skip the non-JSON files
+                            if (!file.getName().endsWith(".json")) {
+                                continue;
+                            }
+                            
+                            instances.add(this.readFile(loadClass, file));
+                        }
+
+                    } else {
+                        throw new ServiceAuditReportException("Unknown access type: " + dataEntity.accessType());
+                    }
+
+                }
+
+            } else {
+                // We are still traversing the tree so we need to identify the files
+
+                List<File> newFolders = new ArrayList<>();
+
+                // Loop through all of the folders
+                for (File folder : folders) {
+                    DataEntity folderDataEntity = dataEntityMap.get(traverseClass);
+                    ParentIdentifier folderParentIdentifier = parentIdentifierMap.get(traverseClass);
+
+                    newFolders.addAll(identifyFolders(folder, traverseClass, folderDataEntity, folderParentIdentifier));
+                }
+
+                // Move onto the next level for the next iteration
+                folders = newFolders;
             }
-
-        } else {
-            throw new ServiceAuditReportException("Unknown access type: " + dataEntity.accessType());
         }
 
         return instances;
+    }
+
+    public List<File> identifyFolders(File folder, Class<?> traverseClass, DataEntity folderDataEntity,
+            ParentIdentifier folderParentIdentifier) {
+        List<File> files = new ArrayList<>();
+
+        if (AccessType.SINGULAR.equals(folderDataEntity.accessType())) {
+
+            // Singular file
+            File singularFolder = new File(folder, traverseClass.getName());
+            if (singularFolder.exists() && singularFolder.isDirectory()) {
+                files.add(singularFolder);
+            }
+
+            return files;
+
+        } else if (AccessType.SET.equals(folderDataEntity.accessType())) {
+
+            // Set folder
+
+            File setFolder = new File(folder, traverseClass.getName());
+            if (!setFolder.exists() || !setFolder.isDirectory()) {
+                // File does not exist
+                return files;
+            }
+
+            if (folderParentIdentifier != null) {
+                // This is limited to a single folder
+                File idFolder = new File(setFolder, folderParentIdentifier.getId());
+                if (idFolder.exists() && idFolder.isDirectory()) {
+                    files.add(idFolder);
+                }
+
+            } else {
+
+                // Loop through all of the files in the folder
+                for (File file : setFolder.listFiles()) {
+                    // Skip the non-folders
+                    if (!file.isDirectory()) {
+                        continue;
+                    }
+
+                    // Performing a double check, if there isn't a corresponding JSON file in the
+                    // folder then the folder is not one of the ones we are expecting and could
+                    // cause errors
+                    File jsonFile = new File(file, file.getName() + ".json");
+                    if (!jsonFile.exists()) {
+                        continue;
+                    }
+
+                    files.add(file);
+                }
+            }
+
+            return files;
+
+        } else {
+            throw new ServiceAuditReportException("Unknown access type: " + folderDataEntity.accessType());
+        }
     }
 
     @Override
