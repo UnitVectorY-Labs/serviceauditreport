@@ -29,6 +29,7 @@ public interface DataManagerHierarchical extends DataManager {
      * @param clazz the class type
      * @return the instances of the class
      */
+    @Override
     default <T> List<T> load(Class<T> clazz) {
         return load(clazz, null);
     }
@@ -50,6 +51,7 @@ public interface DataManagerHierarchical extends DataManager {
      * @param clazz    the class type
      * @param instance the instance of the class
      */
+    @Override
     default <T> void save(Class<T> clazz, T instance) {
         save(clazz, instance, null);
     }
