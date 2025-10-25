@@ -108,7 +108,7 @@
             <dependency>
                 <groupId>com.unitvectory</groupId>
                 <artifactId>jsonassertify</artifactId>
-                <version>0.0.4</version>
+                <version>0.0.5</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
