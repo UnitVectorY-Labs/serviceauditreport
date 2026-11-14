@@ -14,6 +14,10 @@ updates:
       time: "06:00"
       timezone: "America/New_York"
     open-pull-requests-limit: 20
+    # ClassGraph 5 changes APIs used by this code; 6.x also requires JDK 25.
+    ignore:
+      - dependency-name: "io.github.classgraph:classgraph"
+        versions: ["5.x", "6.x"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
