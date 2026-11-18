@@ -1,9 +1,9 @@
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Concept](https://img.shields.io/badge/Status-Concept-white)](https://guide.unitvectorylabs.com/bestpractices/status/#concept) [![codecov](https://codecov.io/gh/UnitVectorY-Labs/serviceauditreport/graph/badge.svg?token=OI0wXYykNb)](https://codecov.io/gh/UnitVectorY-Labs/serviceauditreport)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Abandoned](https://img.shields.io/badge/Status-Abandoned-red)](https://guide.unitvectorylabs.com/bestpractices/status/#abandoned) [![codecov](https://codecov.io/gh/UnitVectorY-Labs/serviceauditreport/graph/badge.svg?token=OI0wXYykNb)](https://codecov.io/gh/UnitVectorY-Labs/serviceauditreport)
 
 # serviceauditreport
 A tool for auditing and reporting on the configuration compliance of various services
 
-This project is under development and is in a non-working state.
+This project is abandoned and is no longer developed or maintained. It remains in a non-working state and is retained for historical reference.
 
 ## Process
 
